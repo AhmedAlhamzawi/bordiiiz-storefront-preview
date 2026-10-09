@@ -1,0 +1,103 @@
+{
+  "_README": "Single source of truth for the Arabic page. Edit here, run `python3 make.py`, commit. Never edit index.html by hand.",
+
+  "brand_ar": "بورديز",
+  "brand_latin": "Bordiiiz",
+
+  "whatsapp": "",
+  "_whatsapp_note": "Full international number, digits only, no + and no 00. Example format: 9647XXXXXXXXX. EMPTY means not yet supplied by the Founder. While empty, make.py builds the page in PRE-LAUNCH mode: order buttons are disabled and the page says so out loud. It will not silently ship a dead button.",
+
+  "public": false,
+  "_public_note": "false = pre-launch banner on, noindex on, order buttons disabled. Set true ONLY after the Founder approves the name, the address, the number and the prices on BOR-31.",
+
+  "delivery_iqd": null,
+  "_delivery_note": "Baghdad delivery fee in IQD. Owner: Ops & Fulfilment Lead, BOR-13. null = we tell the customer in the WhatsApp chat before they confirm. Not a dead end: a human answers.",
+
+  "fx_rate_iqd_per_usd": 1700,
+  "fx_as_of": "2026-10-09",
+  "_fx_note": "Baghdad parallel-market rate used to strike the prices below. Iraq moved the official rate 1320 -> 1500 on 7 Oct 2026 and the street rate is still moving. If this number moves more than 10%, the prices below must be re-struck.",
+
+  "prices_approved": false,
+  "_prices_note": "false = these are MY RECOMMENDATION, not an approved price list. Price is a Supply cost + Founder approval decision, not mine. Nothing goes public with prices_approved=false.",
+
+  "games": [
+    {
+      "id": "dobble",
+      "ar": "دوبل",
+      "latin": "Dobble",
+      "players": "٢-٨ لاعبين",
+      "play": "١٠ دقائق",
+      "teach": "دقيقة وحدة تتعلمها",
+      "loud": "صيحة وضحك",
+      "why": "أسرع عين تفوز. تتعلمها بدقيقة وتلعبها عشر مرات ورا بعض.",
+      "price_iqd": 25000,
+      "art": "dots",
+      "color": "#b4442c"
+    },
+    {
+      "id": "cockroach",
+      "ar": "بوكر الجراد",
+      "latin": "Cockroach Poker",
+      "players": "٢-٦ لاعبين",
+      "play": "١٥-٢٠ دقيقة",
+      "teach": "دقيقتين",
+      "loud": "ضحك وكذب",
+      "why": "اللعبة كلها إنك تكذب بوجه صديقك ويعرف. ما بيها لوحة، بس ورق.",
+      "price_iqd": 20000,
+      "art": "cards",
+      "color": "#5c6b2e"
+    },
+    {
+      "id": "skull",
+      "ar": "سكَل",
+      "latin": "Skull",
+      "players": "٣-٦ لاعبين",
+      "play": "١٥-٢٠ دقيقة",
+      "teach": "٣ دقائق",
+      "loud": "سكتة، بعدين صيحة",
+      "why": "تسكت الغرفة كلها قبل ما تنكشف الورقة. أحلى لحظة بالسهرة.",
+      "price_iqd": 25000,
+      "art": "skull",
+      "color": "#2f3b4a"
+    },
+    {
+      "id": "themind",
+      "ar": "العقل",
+      "latin": "The Mind",
+      "players": "٢-٤ لاعبين",
+      "play": "١٥ دقيقة",
+      "teach": "دقيقتين",
+      "loud": "بلا كلام، بعدين الكل يصيح",
+      "why": "تلعبونها بدون حچي أبداً. إما تفهمون بعض أو لا.",
+      "price_iqd": 20000,
+      "art": "waves",
+      "color": "#1d6f6f"
+    },
+    {
+      "id": "sushigo",
+      "ar": "سوشي كو",
+      "latin": "Sushi Go!",
+      "players": "٢-٥ لاعبين",
+      "play": "١٥-٢٠ دقيقة",
+      "teach": "٤ دقائق",
+      "loud": "هادئة وحلوة",
+      "why": "للسهرة الهادية. ماكو صياح بيها، وهذا سببها موجودة هنا.",
+      "price_iqd": 25000,
+      "art": "tiles",
+      "color": "#c0557a"
+    },
+    {
+      "id": "codenames",
+      "ar": "الأسماء السرية",
+      "latin": "Codenames",
+      "players": "٤-٨ لاعبين أو أكثر",
+      "play": "١٥ دقيقة",
+      "teach": "٤ دقائق",
+      "loud": "الأعلى صوتاً، بأحسن شكل",
+      "why": "فريقين وكلمة وحدة. أكثر لعبة تخلي الناس تتصايح وتضحك سوا.",
+      "price_iqd": 45000,
+      "art": "grid",
+      "color": "#8a5a1f"
+    }
+  ]
+}
