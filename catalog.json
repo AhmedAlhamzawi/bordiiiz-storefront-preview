@@ -1,0 +1,78 @@
+{
+  "_": "Bordiiiz catalog. ONE source of truth for the 10 game cards (BOR-6, board cut 9 Oct 2026). Fill a cell, run `node build.js`, get the pages. Nobody hand-edits a game page.",
+  "_owners": {
+    "title": "Head of Supply & Catalog",
+    "sentence": "Head of Supply & Catalog — one sentence: why this game, tonight, with these people",
+    "players": "Head of Supply & Catalog",
+    "minutes": "Head of Supply & Catalog",
+    "age": "Head of Supply & Catalog",
+    "price": "Head of Supply & Catalog",
+    "stock": "Head of Supply & Catalog — real boxes in the room, not on order",
+    "photo": "Head of Supply & Catalog — real photo of the box in someone's hands",
+    "payment_link": "Founder & CEO — needs a payment account, which needs money approval",
+    "payment_link_max_payments": "Head of Product & Tech — must equal stock, enforced by build.js"
+  },
+  "shop": {
+    "currency": null,
+    "human_name": null,
+    "human_phone": null,
+    "delivery_promise": null,
+    "postal_address": null,
+    "confirmation_url": "./confirmation.html"
+  },
+  "_shop_owners": {
+    "currency": "Founder & CEO — which market we sell in",
+    "human_name": "Founder & CEO — the real person who hands the box over",
+    "human_phone": "Founder & CEO — a number a customer can actually ring",
+    "delivery_promise": "Founder & CEO — an honest date, delivery is in their hands for the first 10 orders",
+    "postal_address": "Founder & CEO — a real address, or the payment logos are a lie"
+  },
+  "games": [
+    {
+      "slug": "codenames",
+      "title": "Codenames",
+      "sentence": "The fastest way to get eight people who do not know each other talking, and someone will say \"banana\" with total confidence.",
+      "players": "4-8",
+      "minutes": 15,
+      "age": 14,
+      "price": null,
+      "stock": null,
+      "photo": null,
+      "payment_link": null,
+      "payment_link_max_payments": null
+    },
+    {
+      "slug": "catan",
+      "title": "Catan",
+      "sentence": "Trade, build, and discover exactly how competitive your friends are under a thin layer of politeness.",
+      "players": "3-4",
+      "minutes": 75,
+      "age": 10,
+      "price": null,
+      "stock": null,
+      "photo": null,
+      "payment_link": null,
+      "payment_link_max_payments": null
+    },
+    {
+      "slug": "azul",
+      "title": "Azul",
+      "sentence": "Quiet, pretty, and mildly ruthless — the game for the evening where nobody wants to shout.",
+      "players": "2-4",
+      "minutes": 35,
+      "age": 8,
+      "price": null,
+      "stock": null,
+      "photo": null,
+      "payment_link": null,
+      "payment_link_max_payments": null
+    },
+    { "slug": "game-04", "title": null, "sentence": null, "players": null, "minutes": null, "age": null, "price": null, "stock": null, "photo": null, "payment_link": null, "payment_link_max_payments": null },
+    { "slug": "game-05", "title": null, "sentence": null, "players": null, "minutes": null, "age": null, "price": null, "stock": null, "photo": null, "payment_link": null, "payment_link_max_payments": null },
+    { "slug": "game-06", "title": null, "sentence": null, "players": null, "minutes": null, "age": null, "price": null, "stock": null, "photo": null, "payment_link": null, "payment_link_max_payments": null },
+    { "slug": "game-07", "title": null, "sentence": null, "players": null, "minutes": null, "age": null, "price": null, "stock": null, "photo": null, "payment_link": null, "payment_link_max_payments": null },
+    { "slug": "game-08", "title": null, "sentence": null, "players": null, "minutes": null, "age": null, "price": null, "stock": null, "photo": null, "payment_link": null, "payment_link_max_payments": null },
+    { "slug": "game-09", "title": null, "sentence": null, "players": null, "minutes": null, "age": null, "price": null, "stock": null, "photo": null, "payment_link": null, "payment_link_max_payments": null },
+    { "slug": "game-10", "title": null, "sentence": null, "players": null, "minutes": null, "age": null, "price": null, "stock": null, "photo": null, "payment_link": null, "payment_link_max_payments": null }
+  ]
+}
