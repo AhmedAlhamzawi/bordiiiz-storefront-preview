@@ -5,15 +5,35 @@
   "brand_latin": "Bordiiiz",
 
   "whatsapp": "",
-  "_whatsapp_note": "Full international number, digits only, no + and no 00. Example format: 9647XXXXXXXXX. EMPTY means not yet supplied by the Founder. While empty, make.py builds the page in PRE-LAUNCH mode: order buttons are disabled and the page says so out loud. It will not silently ship a dead button.",
+  "_whatsapp_note": "Full international number, digits only, no + and no 00. Example format: 9647XXXXXXXXX. EMPTY means not yet supplied by the Founder. The ask now lives on ONE card only, on BOR-45 (question human_phone) — do not ask for it again here. While empty, make.py builds the page in PRE-LAUNCH mode: order buttons are disabled and the page says so out loud. It will not silently ship a dead button.",
+
+  "person_ar": "",
+  "_person_note": "The human a customer is trusting with a prepayment, in Arabic. Owner: Founder, BOR-45 question human_name. EMPTY = the trust line is absent from the page, not filled with a guess. A name is not mine to invent.",
+
+  "address_ar": "بغداد، العراق. نوصّل باليد — ماكو محل تزوره للحين.",
+  "_address_note": "ANSWERED on BOR-45 (question postal_address, option no_address): we have no shopfront and no registration, so the page says that plainly instead of printing a street that does not exist. The Founder can still overrule it on that card; if they do, change this one string.",
 
   "public": false,
-  "_public_note": "false = pre-launch banner on, noindex on, order buttons disabled. Set true ONLY after the Founder approves the name, the address, the number and the prices on BOR-31.",
+  "_public_note": "false = pre-launch banner on, noindex on, order buttons disabled. Set true ONLY once three things are in this file: whatsapp (Founder, BOR-45), person_ar (Founder, BOR-45) and prices_approved (Founder, after BOR-43 cost on 13 Oct). The address is already answered. BOR-31 publishes; BOR-45 holds the asks.",
 
   "cod_cap_today": 0,
   "_cod_note": "COD_CAP_TODAY from BOR-30, published by Ops & Fulfilment Lead every morning. Ops owns the arithmetic, this page owns the switch. 0 or missing or not an integer = cash on delivery is ABSENT from the page, not greyed out. Default closed: every unreadable value means closed, because a failure that opens COD spends money we do not hold. Only Ops changes this number.",
-  "delivery_iqd": null,
-  "_delivery_note": "Baghdad delivery fee in IQD. Owner: Ops & Fulfilment Lead, BOR-13. null = we tell the customer in the WhatsApp chat before they confirm. Not a dead end: a human answers.",
+  "delivery_iqd": 5000,
+  "_delivery_note": "Baghdad-city delivery fee in IQD. Owner: Ops & Fulfilment Lead, BOR-13 delivery-zones, 9 Oct 2026. This is a market rate, not a courier quote; Ops sends the revised row the day a courier quotes. null = we tell the customer in the WhatsApp chat instead. Not a dead end either way: a human answers.",
+
+  "ship_cutoff_local": "14:00",
+  "timezone": "Asia/Baghdad",
+  "working_days": ["sat", "sun", "mon", "tue", "wed", "thu"],
+  "_cutoff_note": "Asia/Baghdad is UTC+3 with no DST. Friday is closed — couriers closed, Shorja closed. Every day count below is WORKING days, never calendar days. The cut-off decides whether today is day zero, which is the difference between a 5-day promise and a 6-day one.",
+  "_cutoff_line_note": "Ops overruled 'order before 14:00 and it ships today' on 9 Oct and they were right: we hold no stock, the wholesaler runs are Sat/Mon/Wed, so on a day with no run nothing can leave the house. The line below is the one that is true every day. Do not upgrade it to 'ships today' until the run days have held two weeks.",
+
+  "delivery_zones": [
+    { "zone": "baghdad_city",      "label_ar": "بغداد — داخل المدينة", "min_days": 2, "max_days": 5, "price_iqd": 5000, "sellable": true },
+    { "zone": "baghdad_outskirts", "label_ar": "بغداد — الأطراف",      "min_days": 3, "max_days": 6, "price_iqd": 6000, "sellable": true },
+    { "zone": "province_centre",   "label_ar": "مراكز المحافظات",      "min_days": 4, "max_days": 8, "price_iqd": 8000, "sellable": true },
+    { "zone": "remote",            "label_ar": "أقضية ونواحي بعيدة",   "min_days": null, "max_days": null, "price_iqd": null, "sellable": false }
+  ],
+  "_zones_note": "Ops & Fulfilment Lead owns every cell. BOR-13 delivery-zones holds which district sits in which zone. remote is deliberately closed for October: no courier quote and no tracking. Render it as 'we do not deliver here yet' — never as a price. Day counts are replaced by what the order log measures at order 10.",
 
   "fx_rate_iqd_per_usd": 1700,
   "fx_as_of": "2026-10-09",
@@ -21,6 +41,8 @@
 
   "prices_approved": false,
   "_prices_note": "false = these are MY RECOMMENDATION, not an approved price list. Price is a Supply cost + Founder approval decision, not mine. Nothing goes public with prices_approved=false.",
+  "prices_review_at": "2026-10-13 21:00",
+  "_prices_review_note": "ANSWERED on BOR-45: prices stay unapproved until Mon 13 Oct 2026 21:00, when BOR-43 returns per-unit IQD cost from a Baghdad shop. Only then can a 35% margin be checked against a real cost instead of against observed retail. This date is shown on the page banner so nobody reads the recommendation as a price list.",
 
   "games": [
     {

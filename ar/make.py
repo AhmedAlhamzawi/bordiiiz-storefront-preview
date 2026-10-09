@@ -31,6 +31,14 @@ PRICES_OK = bool(CFG.get("prices_approved"))
 DELIVERY = CFG.get("delivery_iqd")
 LIVE = PUBLIC and bool(WA) and PRICES_OK
 
+# The person a customer is trusting with a prepayment, and the price-review
+# date. Both are answers that belong to someone else (Founder on BOR-45, Supply
+# cost on BOR-43). Empty is a valid state for both: a missing name is absent
+# from the page, never guessed.
+PERSON = str(CFG.get("person_ar") or "").strip()
+PRICE_DATE = str(CFG.get("prices_review_at") or "").strip()
+ADDRESS = str(CFG.get("address_ar") or "").strip()
+
 # COD switch, BOR-30. Ops publishes the cap; we only read it. Default closed:
 # anything that is not a positive integer means cash on delivery is absent from
 # the page. A bug that opens COD spends money we do not hold, so the failure
@@ -85,7 +93,9 @@ def order_button(game):
     label = f"اطلب {game['ar']} على واتساب"
     if LIVE:
         return f'<a class="btn" href="{order_link(game)}" rel="noopener">{label}</a>'
-    return f'<span class="btn off" role="note">قريباً جداً — رقم الواتساب ينشر اليوم</span>'
+    # No date in this copy. The number arrives when the Founder answers the card
+    # on BOR-45, and a promise of "today" that slips is worse than no promise.
+    return '<span class="btn off" role="note">الطلب مغلق مؤقتاً — ينفتح يوم ينشر رقم الواتساب</span>'
 
 
 cards = []
@@ -107,10 +117,55 @@ for g in CFG["games"]:
     </div>
   </article>""")
 
-delivery_line = (
-    f"التوصيل داخل بغداد: {iqd(DELIVERY)} د.ع."
-    if isinstance(DELIVERY, int)
-    else "أجرة التوصيل داخل بغداد نقولها لك بالواتساب قبل ما تأكد الطلب — ما نفاجئك بسعر عند الباب."
+# ------------------------------------------- delivery, from Ops' zone table
+# Every cell here is Ops & Fulfilment Lead's (BOR-13 delivery-zones). We render
+# it, we never invent it. Day counts are WORKING days — Friday is closed, so a
+# calendar count would be a promise we break roughly one week in one.
+ZONES = [z for z in (CFG.get("delivery_zones") or []) if isinstance(z, dict)]
+SELLABLE_ZONES = [z for z in ZONES if z.get("sellable") and isinstance(z.get("price_iqd"), int)]
+CLOSED_ZONES = [z for z in ZONES if not z.get("sellable")]
+CITY = next((z for z in SELLABLE_ZONES if z.get("zone") == "baghdad_city"), None)
+
+if CITY:
+    delivery_line = (
+        f'التوصيل داخل بغداد: {iqd(CITY["price_iqd"])} د.ع — '
+        f'يوصلك خلال {CITY["min_days"]}–{CITY["max_days"]} أيام عمل.'
+    )
+elif isinstance(DELIVERY, int):
+    delivery_line = f"التوصيل داخل بغداد: {iqd(DELIVERY)} د.ع."
+else:
+    delivery_line = "أجرة التوصيل داخل بغداد نقولها لك بالواتساب قبل ما تأكد الطلب — ما نفاجئك بسعر عند الباب."
+
+# Ops killed "order before 14:00 and it ships today" and was right: we hold no
+# stock, so on a day with no wholesaler run nothing can leave the house. "We
+# start your order" is true every single day. The cut-off still earns its place
+# because it decides whether today is day zero.
+CUTOFF = str(CFG.get("ship_cutoff_local") or "").strip()
+cutoff_line = (
+    f"<b>اطلب قبل {CUTOFF} ونبدي بطلبك نفس اليوم.</b>"
+    "<span>الجمعة مغلق. أيام العمل من السبت للخميس، وكل المدد المكتوبة أيام عمل مو أيام تقويم.</span>"
+    if CUTOFF
+    else ""
+)
+
+# Zones we cannot serve are named, not priced, and never silently absent: a
+# customer in a closed district should read "not yet" from us, not discover it
+# after they have paid.
+closed_line = (
+    "<b>" + "، ".join(z["label_ar"] for z in CLOSED_ZONES) + ": ما نوصل لهنا بعد.</b>"
+    "<span>تكدر تكتب لنا على الواتساب ونخبرك يوم نفتحها.</span>"
+    if CLOSED_ZONES
+    else ""
+)
+
+other_zones = [z for z in SELLABLE_ZONES if z is not CITY]
+zones_line = (
+    "<b>" + " · ".join(
+        f'{z["label_ar"]}: {iqd(z["price_iqd"])} د.ع، {z["min_days"]}–{z["max_days"]} أيام عمل'
+        for z in other_zones
+    ) + "</b>"
+    if other_zones
+    else ""
 )
 
 # When COD is closed the option is absent, not disabled and not promised for
@@ -123,10 +178,59 @@ pay_line = (
     "<span>نكتب لك الطريقة بالواتساب، وما نطلب منك أي رقم بطاقة.</span>"
 )
 
+# ------------------------------------------------- the price-review date
+_AR_DIGITS = str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩")
+_AR_MONTHS = {
+    1: "كانون الثاني", 2: "شباط", 3: "آذار", 4: "نيسان", 5: "أيار", 6: "حزيران",
+    7: "تموز", 8: "آب", 9: "أيلول", 10: "تشرين الأول", 11: "تشرين الثاني", 12: "كانون الأول",
+}
+
+
+def ar_date(stamp):
+    """'2026-10-13 21:00' -> '١٣ تشرين الأول'. Empty or unparseable -> ''."""
+    try:
+        y, m, d = (int(p) for p in stamp.split(" ")[0].split("-"))
+        return f"{str(d).translate(_AR_DIGITS)} {_AR_MONTHS[m]}"
+    except (ValueError, KeyError, IndexError):
+        return ""
+
+
+_price_when = ar_date(PRICE_DATE)
+price_wait = (
+    f"الأسعار تحت المراجعة وتتثبت بعد {_price_when}."
+    if _price_when
+    else "الأسعار النهائية تنتظر موافقة."
+)
+
+# A line with nothing in it is not rendered as an empty bullet. Every item in
+# this list is a value someone owns, and an owner who has not answered yet
+# leaves no trace on the page rather than an empty promise.
+trust_items = "\n".join(
+    f"    <li>{line}</li>"
+    for line in [
+        f"<b>{delivery_line}</b>" + (f"<span>{zones_line}</span>" if zones_line else ""),
+        cutoff_line,
+        pay_line,
+        closed_line,
+        "<b>إذا وصلتك ناقصة أو مكسورة، نبدلها.</b><span>ترجعها خلال ١٤ يوم.</span>",
+    ]
+    if line
+)
+
 banner = "" if LIVE else f"""<p class="pre">
   <b>هذي الصفحة مو منشورة بعد.</b>
-  رقم الواتساب والأسعار النهائية تنتظر موافقة. لا تطلب من هنا اليوم.
+  {price_wait} لا تطلب من هنا اليوم.
 </p>"""
+
+# A stranger prepaying a shop with no reviews is trusting a person, not a logo.
+# So when we have a name, it goes first, above everything else on the trust list.
+# When we do not, the line is absent — a placeholder name is worse than silence.
+person_line = (
+    f'    <li><b>المسؤول عن طلبك: {PERSON}.</b>'
+    "<span>اسم وشخص تحچيه، مو شركة بلا وجه.</span></li>\n"
+    if PERSON
+    else ""
+)
 
 robots = "" if LIVE else '\n<meta name="robots" content="noindex,nofollow">'
 
@@ -214,16 +318,14 @@ footer{{border-top:1px solid var(--line);background:var(--card);margin-top:30px}
   </div>
 
   <ul class="trust">
-    <li><b>يرد عليك إنسان، مو روبوت.</b><span>تكتب لنا على الواتساب ويجيك جواب من واحد منا، مو رسالة جاهزة.</span></li>
-    <li><b>{delivery_line}</b></li>
-    <li>{pay_line}</li>
-    <li><b>إذا وصلتك ناقصة أو مكسورة، نبدلها.</b><span>ترجعها خلال ١٤ يوم.</span></li>
+{person_line}    <li><b>يرد عليك إنسان، مو روبوت.</b><span>تكتب لنا على الواتساب ويجيك جواب من واحد منا، مو رسالة جاهزة.</span></li>
+{trust_items}
   </ul>
 </main>
 
 <footer><div class="foot">
   <p>{CFG["brand_ar"]} · {CFG["brand_latin"]} — ألعاب لوحية، بغداد.</p>
-  <p>العنوان ورقم التسجيل ينكتبون هنا قبل أول طلب.</p>
+  <p>{ADDRESS}</p>
 </div></footer>
 </body>
 </html>
