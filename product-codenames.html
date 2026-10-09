@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Codenames — Bordiiiz</title>
+<meta name="description" content="Two teams, one word at a time. 4–8 players, 15 minutes. Preview build.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--ink:#14110f;--ink2:#5a524c;--line:#e6e0d8;--bg:#fbf8f4;--card:#fff;
+--accent:#b4442c;--ok:#1d6f42;--pad:16px;--r:14px;
+}
+html{-webkit-text-size-adjust:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--bg);padding-bottom:84px}
+svg{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:0 var(--pad)}
+
+.preview{background:#14110f;color:#fbf8f4;font-size:13px;line-height:1.4;padding:10px var(--pad);text-align:center}
+.preview b{color:#f0b429}
+
+header{border-bottom:1px solid var(--line);background:var(--card)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--pad);max-width:720px;margin:0 auto}
+.logo{font-size:19px;font-weight:700;letter-spacing:-.4px;text-decoration:none}
+.logo span{color:var(--accent)}
+.cart{font-size:14px;text-decoration:none;color:var(--ink2);white-space:nowrap}
+
+.crumb{font-size:13px;color:var(--ink2);padding:12px 0 0}
+.crumb a{text-decoration:none}
+
+.art{aspect-ratio:1/1;background:#f2ece4;border-radius:var(--r);margin:12px 0 18px;border:1px solid var(--line)}
+
+h1{font-size:28px;line-height:1.15;letter-spacing:-.6px}
+.evening{color:var(--ink2);margin-top:8px;font-size:16px}
+
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:18px 0}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 8px;text-align:center}
+.fact b{display:block;font-size:17px;letter-spacing:-.2px}
+.fact span{font-size:11.5px;text-transform:uppercase;letter-spacing:.07em;color:var(--ink2)}
+
+.buy{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:18px 0}
+.ptop{display:flex;align-items:baseline;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.price{font-size:26px;font-weight:700;letter-spacing:-.5px}
+.price small{font-size:13px;font-weight:400;color:var(--ink2)}
+.stock{font-size:13px;font-weight:700;color:var(--ok)}
+.ship{font-size:13.5px;color:var(--ink2);margin-top:8px}
+.ship b{color:var(--ink)}
+
+.btn{display:block;width:100%;margin-top:14px;padding:15px;border:0;border-radius:11px;background:var(--accent);color:#fff;font:inherit;font-weight:700;font-size:17px;text-align:center;text-decoration:none;cursor:pointer}
+.btn:active{background:#9c3722}
+.btn.ghost{background:transparent;color:var(--ink2);font-weight:400;font-size:14px;padding:10px 0;margin-top:6px}
+.note{font-size:12.5px;color:var(--ink2);margin-top:10px;text-align:center}
+
+h2{font-size:14px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink2);margin:28px 0 10px;font-weight:700}
+.why p+p{margin-top:10px}
+.why{font-size:16px}
+
+.trust{list-style:none;margin:14px 0 0;font-size:14.5px}
+.trust li{padding:11px 0;border-top:1px solid var(--line);display:flex;gap:10px}
+.trust li:last-child{border-bottom:1px solid var(--line)}
+.trust b{flex:0 0 auto}
+
+.sticky{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);padding:10px var(--pad);box-shadow:0 -2px 12px rgba(20,17,15,.07)}
+.sbar{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.sbar .p{font-weight:700;font-size:17px;white-space:nowrap}
+.sbar .btn{margin:0;flex:1;padding:14px}
+
+footer{margin-top:32px;border-top:1px solid var(--line);background:var(--card)}
+.foot{max-width:720px;margin:0 auto;padding:20px var(--pad) 28px;font-size:13.5px;color:var(--ink2);display:flex;flex-direction:column;gap:10px}
+.pay{display:flex;gap:7px;flex-wrap:wrap}
+.pay b{font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:5px;padding:4px 7px;font-weight:700}
+.foot a{color:var(--ink);text-decoration:underline}
+@media(min-width:560px){h1{font-size:34px}}
+</style>
+</head>
+<body>
+
+<p class="preview"><b>PREVIEW BUILD</b> — design and speed reference. No orders are taken here and no price is final.</p>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="./index.html">Bordii<span>i</span>iz</a>
+    <a class="cart" href="#" aria-label="Cart, empty">Cart · 0</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <p class="crumb"><a href="./index.html">&larr; Good for tonight</a></p>
+
+  <svg class="art" viewBox="0 0 400 400" role="img" aria-label="Codenames box with a five by five grid of word cards">
+    <rect width="400" height="400" fill="#f2ece4"/>
+    <rect x="44" y="74" width="312" height="252" rx="10" fill="#b4442c"/>
+    <rect x="44" y="74" width="312" height="46" rx="10" fill="#9c3722"/>
+    <rect x="68" y="90" width="118" height="14" rx="7" fill="#fbf8f4" opacity=".85"/>
+    <g fill="#fbf8f4">
+      <rect x="68" y="140" width="52" height="32" rx="4" opacity=".95"/>
+      <rect x="126" y="140" width="52" height="32" rx="4" opacity=".6"/>
+      <rect x="184" y="140" width="52" height="32" rx="4" opacity=".95"/>
+      <rect x="242" y="140" width="52" height="32" rx="4" opacity=".75"/>
+      <rect x="300" y="140" width="32" height="32" rx="4" opacity=".9"/>
+      <rect x="68" y="178" width="52" height="32" rx="4" opacity=".7"/>
+      <rect x="126" y="178" width="52" height="32" rx="4" opacity=".95"/>
+      <rect x="184" y="178" width="52" height="32" rx="4" opacity=".55"/>
+      <rect x="242" y="178" width="52" height="32" rx="4" opacity=".95"/>
+      <rect x="300" y="178" width="32" height="32" rx="4" opacity=".65"/>
+      <rect x="68" y="216" width="52" height="32" rx="4" opacity=".95"/>
+      <rect x="126" y="216" width="52" height="32" rx="4" opacity=".75"/>
+      <rect x="184" y="216" width="52" height="32" rx="4" opacity=".9"/>
+      <rect x="242" y="216" width="52" height="32" rx="4" opacity=".6"/>
+      <rect x="300" y="216" width="32" height="32" rx="4" opacity=".95"/>
+      <rect x="68" y="254" width="52" height="32" rx="4" opacity=".6"/>
+      <rect x="126" y="254" width="52" height="32" rx="4" opacity=".9"/>
+      <rect x="184" y="254" width="52" height="32" rx="4" opacity=".7"/>
+      <rect x="242" y="254" width="52" height="32" rx="4" opacity=".95"/>
+      <rect x="300" y="254" width="32" height="32" rx="4" opacity=".8"/>
+    </g>
+  </svg>
+
+  <h1>Codenames</h1>
+  <p class="evening">Two teams. One word at a time. Someone will say "banana" and mean it with total confidence.</p>
+
+  <div class="facts">
+    <div class="fact"><b>4–8</b><span>players</span></div>
+    <div class="fact"><b>15 min</b><span>a round</span></div>
+    <div class="fact"><b>14+</b><span>age</span></div>
+  </div>
+
+  <div class="buy">
+    <div class="ptop">
+      <span class="price">19.00 <small>USD*</small></span>
+      <span class="stock">In stock · 12 boxes</span>
+    </div>
+    <p class="ship">Delivery <b>3.50</b> · arrives in <b>2–4 days</b>. Free over 50.00.</p>
+    <a class="btn" href="#" aria-label="Buy Codenames now">Buy now</a>
+    <a class="btn ghost" href="#">Add to cart instead</a>
+    <p class="note">Two taps from here to paid. Card, Apple Pay, or cash on delivery.</p>
+  </div>
+
+  <h2>Why this game</h2>
+  <div class="why">
+    <p>It is the fastest way to get eight people who do not know each other talking. No rules lecture — you teach it in ninety seconds and the first round is already funny.</p>
+    <p>Best with an odd mix: two people who think alike on the same team, and one person who absolutely does not.</p>
+  </div>
+
+  <h2>Before you buy</h2>
+  <ul class="trust">
+    <li><b>Returns</b><span>14 days, box opened or not. We pay the return shipping if the game was damaged.</span></li>
+    <li><b>Language</b><span>English edition. Rules are language-independent once you start.</span></li>
+    <li><b>Stock</b><span>The number above is real stock in our room. We never sell a box we do not have.</span></li>
+    <li><b>A human</b><span>Not sure it fits your group? <a href="./index.html">Ask us</a> — a person answers, same day.</span></li>
+  </ul>
+
+</main>
+
+<div class="sticky">
+  <div class="sbar">
+    <span class="p">19.00</span>
+    <a class="btn" href="#">Buy now</a>
+  </div>
+</div>
+
+<footer>
+  <div class="foot">
+    <div class="pay"><b>Cards</b><b>Apple Pay</b><b>Cash on delivery</b></div>
+    <p>*Price and currency are indicative in this preview. Market and currency are a Founder decision; the catalog price comes from Supply.</p>
+    <p><a href="./index.html">Returns in 14 days</a> · <a href="./index.html">Delivery</a> · <a href="./index.html">Talk to a human</a></p>
+    <p>Bordiiiz — Boddies Board Games. Address and registration go here before we take a single order.</p>
+  </div>
+</footer>
+
+</body>
+</html>
