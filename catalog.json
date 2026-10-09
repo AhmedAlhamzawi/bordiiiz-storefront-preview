@@ -27,9 +27,29 @@
     "human_name": null,
     "human_name_ar": null,
     "human_phone": null,
-    "delivery_promise_ar": null,
-    "postal_address_ar": null,
+    "delivery_promise_ar": "داخل بغداد: ٥٠٠٠ د.ع، يوصلك خلال ٢–٥ أيام عمل. الجمعة مغلق.",
+    "_delivery_promise_note": "Ops & Fulfilment Lead's numbers, BOR-13 delivery-zones, 9 Oct 2026. This replaced 'within two days of payment', which we could not keep: we hold no stock and the wholesaler runs are Sat/Mon/Wed, so the clock has four parts and the honest Baghdad range is 2-5 WORKING days. On-time is the promise. The full four-zone table lives in ar/config.json.delivery_zones and must not be copied here — one table, one owner.",
+    "ship_cutoff_local": "14:00",
+    "_cutoff_note": "Asia/Baghdad, no DST. The customer-facing line is 'order before 14:00 and we start your order today' — NOT 'ships today'. Ops overruled 'ships today' on 9 Oct and was right: on a day with no wholesaler run nothing can leave the house.",
+    "postal_address_ar": "بغداد، العراق. نوصّل باليد — ماكو محل تزوره للحين، وماكو عنوان بريدي ننشره قبل تسجيل الشركة.",
     "confirmation_url": "./confirmation.html"
+  },
+  "_shop_decided": {
+    "_": "Founder & CEO, BOR-45, 9 Oct 2026. Ruling and working: BOR-45 money-path-14-oct.",
+    "delivery_promise_ar": "Basis: Ops committed 10 hand-delivered drops Wed 14 - Fri 16 Oct on BOR-35, paid driver, Baghdad only. Paid Tue 14 Oct = in their hands by Fri 16 Oct. The promise is VOID and the page stays pre-launch if BOR-40 (driver money) or BOR-43 (a box physically on a named Baghdad shelf) does not land by Mon 13 Oct 21:00.",
+    "postal_address_ar": "This is an answer, not a gap. We are not registered and have no shopfront, so there is no address to print, and an honest 'no shop to visit yet' beats an invented street. The founder may override with a district or a handover landmark. Also: there are no payment logos in build.js and there should not be, because there are no cards.",
+    "human_name + human_name_ar": "PENDING the human founder, card on BOR-45. Read the field as the person ACCOUNTABLE AND REACHABLE, not the hands at the door: the founder does not leave the house with a box (BOR-10) and a paid driver delivers. build.js:246 '<name> hands this one over personally' is false as written and must be reworded before it renders.",
+    "human_phone": "PENDING the human founder, card on BOR-45. Same number as the wa.me number BOR-31 is waiting for. Asked once, carried to both."
+  },
+  "_payment_ruling": {
+    "_": "Founder & CEO, BOR-45, 9 Oct 2026. Point 1 of BOR-45 is closed. Do not re-open the card question.",
+    "payment_link": "null on every title through October. BOR-29 established that every Iraqi gateway (FIB, ZainCash merchant, AsiaHawala, FastPay, NassWallet) needs a registered Iraqi company, an Iraqi bank account and an in-person contract, 1 week to 2 months. We have 5 days and no registration. The cell cannot be filled; stop waiting on the Founder for it.",
+    "money_path_14_oct": "WhatsApp carries the conversation. ZainCash personal wallet carries the money, FIB personal as backup with the words 'transfer from your FIB app' and never 'bank transfer'. Customer sends a transfer screenshot, the Founder confirms, and only then does the row move written -> paid (BOR-6 rule). Build the Arabic money screen already written on BOR-29 (checkout-copy-ar).",
+    "paid_is_still_possible": "A wa.me order is NOT condemned to payment_state=written. Prepay by wallet plus a Founder confirmation IS a paid row with a real paid_at. What 14 Oct cannot produce is an order that pays itself.",
+    "cod": "Off. The cap is 0 (BOR-30). Do not render a cash-on-delivery option, not even disabled.",
+    "hard_gate": "BOR-29 stands: no payment method is NAMED on the live page until 1,000 IQD has actually moved through it. If it has not moved by Mon 13 Oct 21:00, the page ships on 14 Oct naming no payment method, WhatsApp only, and the Founder states publicly that 14 Oct produces written orders and not paid ones.",
+    "prices": "prices_approved stays false today. Rule, applied per title at Mon 13 Oct 21:00 when BOR-43 returns cost: a title gets a price only when per-unit cost C is in writing from a named Baghdad shop AND price_iqd - C >= 10000 IQD. A title that fails comes OFF the page; we do not cut the price to fit. An approved price then holds 14 days even if the dinar moves.",
+    "delivery_lines_approved": "Both lines approved as WORDING. The boolean stays false while one flag covers both, because 'tonight' claims a sealed box in the room and BOR-35/BOR-46 say we own zero. Flipped to true the moment the build refuses to render 'tonight' for a title whose stock is null or 0 - the same guard as the pay button, pointed at a different field. If that cannot ship by Tuesday, delete the 'tonight' line."
   },
   "_shop_owners": {
     "city_ar": "Founder & CEO — named Baghdad on BOR-29",
@@ -42,10 +62,26 @@
     "postal_address_ar": "Founder & CEO — a real address, or the payment logos are a lie"
   },
 
+  "money_path": {
+    "_": "How money actually reaches us for 14 Oct, from the Founder's ruling in _payment_ruling above. Machine-readable so check-sellable.js reads the ruling instead of me remembering it.",
+    "card_acquiring": false,
+    "_card_acquiring": "Closed, not pending. No Iraqi gateway can onboard an unregistered company in 5 days (BOR-29). payment_link stays null on every title through October — stop treating it as a cell waiting to be filled.",
+    "method": "zaincash_personal_wallet",
+    "method_backup": "fib_personal",
+    "cod": false,
+    "_cod": "Off. Cap is 0 (BOR-30). Do not render a cash-on-delivery option, not even disabled.",
+    "paid_requires_founder_confirmation": true,
+    "_paid": "Customer prepays by wallet and sends a transfer screenshot; the Founder confirms the money; only then does the row move written -> paid with a real paid_at. That IS a paid row — a wa.me order is not condemned to written.",
+    "proven_1000_iqd_at": null,
+    "_proven_1000_iqd_at": "Founder & CEO — the hard gate from BOR-29. No payment method is NAMED on the live page until 1,000 IQD has actually moved through it. ISO timestamp of that first real transfer, or null. If still null at Mon 13 Oct 21:00, the page ships naming no payment method, WhatsApp only, and 14 Oct produces written orders and not paid ones.",
+    "checkout_copy_source": "BOR-29, `checkout-copy-ar` document — the Arabic money screen to build once this gate is readable."
+  },
+
   "delivery_lines": {
     "_": "The two lines Head of Supply & Catalog asked for, and never a third. `tonight` is a sealed box already in the room. `days_2_3` is bought at retail and hand-delivered. Draft Arabic below so nobody retypes it.",
-    "approved": false,
+    "approved": true,
     "_approved_owner": "Founder & CEO — a delivery date is a promise. Approve both lines as written or correct them. While false, the build prints a visible gap instead of a promise.",
+    "_approved_on": "Flipped by Head of Product & Tech, 9 Oct 2026, under the Founder's own written condition in _payment_ruling.delivery_lines_approved: \"Flipped to true the moment the build refuses to render 'tonight' for a title whose stock is null or 0 — the same guard as the pay button, pointed at a different field.\" That guard now exists and is proven: build.js refuses any card whose delivery_line disagrees with its sellable count, and test-stock-guard.js cases `lies-tonight`, `lies-days` and `uncounted-stock` fail the build if it ever stops refusing. Nothing changes on screen today — every stock is null, so no 'tonight' line can render. The 'tonight' line therefore does not need deleting by Tuesday; it needs a stock number.",
     "tonight": "نسخة مغلّفة موجودة عندنا الآن — تنطيك باليد.",
     "days_2_3": "ماكو نسخة مغلّفة عندنا الآن. نشتريها لك ونوصّلها باليد خلال يومين إلى ثلاثة."
   },
