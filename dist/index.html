@@ -1,218 +1,223 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Bordiiiz — a reason to sit together</title>
-<meta name="description" content="Ten games picked for the evening, not the shelf.">
+<title>بورديز — سبب تگعدون سوا</title>
+<meta name="description" content="عشر ألعاب مختارة للسهرة، مو للرف.">
 <style>*{box-sizing:border-box;margin:0;padding:0}
 :root{--ink:#14110f;--ink2:#5a524c;--line:#e6e0d8;--bg:#fbf8f4;--card:#fff;--accent:#b4442c;--ok:#1d6f42;--warn:#9a5b00;--pad:16px;--r:14px}
 html{-webkit-text-size-adjust:100%}
-body{font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;color:var(--ink);background:var(--bg)}
+body{font:16px/1.65 -apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI","Noto Naskh Arabic","Droid Arabic Naskh",Tahoma,Arial,sans-serif;color:var(--ink);background:var(--bg)}
 img,svg{display:block;max-width:100%}
 a{color:inherit}
 .wrap{max-width:720px;margin:0 auto;padding:0 var(--pad)}
-.preview{background:#14110f;color:#fbf8f4;font-size:13px;line-height:1.4;padding:10px var(--pad);text-align:center}
+.preview{background:#14110f;color:#fbf8f4;font-size:13px;line-height:1.5;padding:10px var(--pad);text-align:center}
 .preview b{color:#f0b429}
 header{border-bottom:1px solid var(--line);background:var(--card)}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--pad);max-width:720px;margin:0 auto}
-.logo{font-size:19px;font-weight:700;letter-spacing:-.4px;text-decoration:none}
+.logo{font-size:19px;font-weight:700;letter-spacing:-.4px;text-decoration:none;direction:ltr}
 .logo span{color:var(--accent)}
-.bar .human{font-size:13.5px;color:var(--ink2);text-decoration:none;text-align:right}
+.bar .human{font-size:13.5px;color:var(--ink2);text-decoration:none;text-align:end}
 .bar .human b{display:block;color:var(--ink)}
+.bar .human bdi{direction:ltr;unicode-bidi:isolate}
 .hero{padding:28px 0 18px}
-.hero h1{font-size:28px;line-height:1.15;letter-spacing:-.6px;margin-bottom:10px}
-.hero p{color:var(--ink2);max-width:40ch}
+.hero h1{font-size:28px;line-height:1.3;margin-bottom:10px}
+.hero p{color:var(--ink2);max-width:42ch}
 .steps{display:flex;gap:8px;margin:20px 0 4px;font-size:13px;color:var(--ink2)}
 .steps li{list-style:none;flex:1;border-top:3px solid var(--line);padding-top:7px}
 .steps li.on{border-top-color:var(--accent);color:var(--ink);font-weight:600}
-h2{font-size:14px;text-transform:uppercase;letter-spacing:.09em;color:var(--ink2);margin:30px 0 12px;font-weight:700}
+h2{font-size:14px;letter-spacing:.02em;color:var(--ink2);margin:30px 0 12px;font-weight:700}
 .grid{display:grid;gap:14px;grid-template-columns:1fr}
-@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:34px}}
+@media(min-width:560px){.grid{grid-template-columns:1fr 1fr}.hero h1{font-size:33px}}
 .card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;text-decoration:none;display:flex;flex-direction:column}
 .card .art{aspect-ratio:4/3;background:#f2ece4;width:100%;object-fit:cover}
 .card .body{padding:14px;display:flex;flex-direction:column;gap:7px;flex:1}
-.card h3{font-size:17px;line-height:1.25;letter-spacing:-.2px}
-.evening{font-size:13.5px;color:var(--ink2)}
+.card h3{font-size:18px;line-height:1.35}
+.card h3 bdi{direction:ltr;unicode-bidi:isolate}
+.evening{font-size:14px;color:var(--ink2)}
 .row{display:flex;align-items:baseline;justify-content:space-between;gap:8px;margin-top:auto;padding-top:4px}
 .price{font-size:17px;font-weight:700}
 .price small{font-weight:400;color:var(--ink2);font-size:12px}
-.stock{font-size:12.5px;color:var(--ok);font-weight:600}
-.stock.low{color:var(--warn)}
+.have{font-size:12.5px;color:var(--ok);font-weight:600;text-align:end}
+.have.soon{color:var(--warn)}
 .card.pending{opacity:.72}
-.card.pending .stock{color:var(--ink2)}
+.card.pending .have{color:var(--ink2)}
 .crumb{padding:14px 0 2px;font-size:14px}
 .crumb a{color:var(--ink2);text-decoration:none}
-h1.g{font-size:27px;line-height:1.18;letter-spacing:-.5px;margin:14px 0 8px}
-.lede{font-size:17px;line-height:1.45;color:var(--ink);max-width:42ch;margin-bottom:18px}
+h1.g{font-size:27px;line-height:1.3;margin:14px 0 8px}
+h1.g bdi{direction:ltr;unicode-bidi:isolate}
+.lede{font-size:18px;line-height:1.6;color:var(--ink);max-width:44ch;margin-bottom:18px}
 .facts{display:flex;gap:10px;margin:0 0 20px}
 .fact{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px;text-align:center}
 .fact b{display:block;font-size:16px}
 .fact span{font-size:12px;color:var(--ink2)}
 .buy{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:8px}
 .ptop{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:10px}
-.btn{display:block;background:var(--accent);color:#fff;text-align:center;font-size:17px;font-weight:700;padding:15px;border-radius:11px;text-decoration:none;border:0;width:100%}
+.btn{display:block;background:var(--accent);color:#fff;text-align:center;font-size:18px;font-weight:700;padding:15px;border-radius:11px;text-decoration:none;border:0;width:100%}
 .btn:active{background:#9c3722}
-.note{font-size:12.5px;color:var(--ink2);margin-top:10px}
+.note{font-size:13px;color:var(--ink2);margin-top:10px}
 .hand{font-size:14px;color:var(--ink2);margin-top:12px;padding-top:12px;border-top:1px solid var(--line)}
 .hand b{color:var(--ink)}
+.hand bdi{direction:ltr;unicode-bidi:isolate}
 .blocked{background:#fff6ea;border:1px solid #f0d9b5;border-radius:11px;padding:14px;font-size:14px}
 .blocked b{display:block;margin-bottom:6px;font-size:15px}
-.blocked ul{margin:8px 0 0 18px;color:var(--ink2);font-size:13px}
+.blocked ul{margin:8px 18px 0 0;color:var(--ink2);font-size:13px;direction:ltr;text-align:left}
 .trust{list-style:none;margin:0 0 8px}
 .trust li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--line);font-size:14px}
-.trust li b{flex:0 0 84px}
+.trust li b{flex:0 0 92px}
 .trust li span{color:var(--ink2)}
 footer{margin:36px 0 0;border-top:1px solid var(--line);background:var(--card)}
 .foot{max-width:720px;margin:0 auto;padding:20px var(--pad) 32px;font-size:13.5px;color:var(--ink2);display:flex;flex-direction:column;gap:10px}
 .pay{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.pay b{font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:5px;padding:4px 7px;color:var(--ink2);font-weight:700}
-.foot a{color:var(--ink);text-decoration:underline}</style>
+.pay b{font-size:11px;letter-spacing:.04em;border:1px solid var(--line);border-radius:5px;padding:4px 7px;color:var(--ink2);font-weight:700}
+.foot a{color:var(--ink);text-decoration:underline}
+.foot bdi{direction:ltr;unicode-bidi:isolate}</style>
 </head>
 <body>
 
-<p class="preview"><b>PREVIEW BUILD</b> &mdash; generated by <code>build.js</code> from <code>catalog.json</code>. No money moves here yet.</p>
+<p class="preview"><b>نسخة تجريبية</b> &mdash; مبنية من <code>catalog.json</code>. ماكو فلوس تتحرك هنا بعد.</p>
 
 <header>
   <div class="bar">
     <a class="logo" href="./index.html">Bordii<span>i</span>iz</a>
-    <span class="human"><b>A human answers</b>name and number pending</span>
+    <span class="human"><b>يجاوبك إنسان</b>الاسم والرقم بعدهم ما وصلوا</span>
   </div>
 </header>
 
 <main class="wrap">
 
   <section class="hero">
-    <h1>We don't sell cardboard.<br>We sell the evening.</h1>
-    <p>Ten games. Each one picked for a particular kind of evening with a particular kind of people.</p>
+    <h1>إحنا ما نبيع كارتون.<br>إحنا نبيع السهرة.</h1>
+    <p>عشر ألعاب. كل وحدة مختارة لنوع سهرة معيّن، ولنوع ناس معيّن.</p>
     <ol class="steps">
-      <li class="on">1. Pick</li>
-      <li>2. Pay</li>
-      <li>3. Address</li>
+      <li class="on">١. تختار</li>
+      <li>٢. تدفع</li>
+      <li>٣. العنوان</li>
     </ol>
   </section>
 
-  <h2>Good for tonight &middot; 0 of 10 ready</h2>
+  <h2>زينة لهاي الليلة &middot; ٠ من ١٠ جاهزة</h2>
 
   <div class="grid">
 
     <a class="card pending" href="./g/dobble.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game dobble</h3>
-        <p class="evening">2-8 players &middot; 10 min</p>
+        <h3>دوبل</h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/the-mind.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game the-mind</h3>
-        <p class="evening">2-4 players &middot; 15 min</p>
+        <h3>العقل</h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/sushi-go.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game sushi-go</h3>
-        <p class="evening">2-5 players &middot; 15-20 min</p>
+        <h3>سوشي كو</h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/kingdomino.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game kingdomino</h3>
-        <p class="evening">2-4 players &middot; 15-20 min</p>
+        <h3><bdi>Kingdomino</bdi></h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/azul.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game azul</h3>
-        <p class="evening">2-4 players &middot; 30-45 min</p>
+        <h3><bdi>Azul</bdi></h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/no-thanks.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game no-thanks</h3>
-        <p class="evening">3-7 players &middot; 20 min</p>
+        <h3><bdi>No Thanks!</bdi></h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/cockroach-poker.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game cockroach-poker</h3>
-        <p class="evening">2-6 players &middot; 15-20 min</p>
+        <h3>بوكر الجراد</h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/6-nimmt.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game 6-nimmt</h3>
-        <p class="evening">2-10 players &middot; 30 min</p>
+        <h3><bdi>6 nimmt! (Take 5)</bdi></h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/jaipur.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game jaipur</h3>
-        <p class="evening">2 players &middot; 30 min</p>
+        <h3><bdi>Jaipur</bdi></h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
 
     <a class="card pending" href="./g/ticket-to-ride-london.html">
-      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="Photo pending"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="sans-serif" font-size="15" fill="#a39a92">photo pending</text></svg>
+      <svg class="art" viewBox="0 0 400 300" role="img" aria-label="الصورة بعدها ما وصلت"><rect width="400" height="300" fill="#f2ece4"/><text x="200" y="155" text-anchor="middle" font-family="Tahoma,sans-serif" font-size="15" fill="#a39a92">الصورة بعدها ما وصلت</text></svg>
       <div class="body">
-        <h3>Game ticket-to-ride-london</h3>
-        <p class="evening">2-4 players &middot; 10-15 min</p>
+        <h3><bdi>Ticket to Ride: London</bdi></h3>
+        <p class="evening"><em>السطر العربي بعده ما وصل من Supply</em></p>
         <div class="row">
-          <span class="price">NaN <small>IQD</small></span>
-          <span class="stock">Not for sale yet</span>
+          <span class="price"><small>السعر بعده ما تثبّت</small></span>
+          <span class="have">ما تنباع بعد</span>
         </div>
       </div>
     </a>
@@ -223,9 +228,8 @@ footer{margin:36px 0 0;border-top:1px solid var(--line);background:var(--card)}
 
 <footer>
   <div class="foot">
-    <div class="pay"><b>Cards</b><b>Apple Pay</b></div>
-    <p>Bordiiiz &mdash; Boddies Board Games. A real postal address goes here before we take a single order.</p>
-    <p><a href="./returns.html">Returns in 14 days</a> &middot; Talk to a human</p>
+    <p>بغداد، العراق. نوصّل باليد — ماكو محل تزوره للحين، وماكو عنوان بريدي ننشره قبل تسجيل الشركة.</p>
+    <p><a href="./returns.html">الإرجاع خلال ١٤ يوم</a> &middot; تكلم مع إنسان</p>
   </div>
 </footer>
 

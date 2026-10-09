@@ -1,4 +1,12 @@
 // Runs the real <script> from confirmation.html against a minimal DOM shim.
+//
+// The field's owner (Customer Love Lead) revised this twice on 9 Oct:
+//   1. the two follow-ups — "which night were you at?" and "who should we
+//      thank?" — are CUT. One question, one tap, no branching.
+//   2. the Arabic wording is the version that ships, not the English one.
+// These checks hold the page to both, and to the one thing that must not drift:
+// we store the option id, never the Arabic string, so the wording can change
+// tomorrow without moving a number Growth reads.
 const fs = require('fs');
 const vm = require('vm');
 const assert = require('assert');
@@ -6,11 +14,7 @@ const assert = require('assert');
 const HTML = fs.readFileSync(process.argv[2], 'utf8');
 const SRC = HTML.match(/<script>([\s\S]*?)<\/script>/)[1];
 
-const IDS = [
-  'attribution-form', 'followup-night', 'followup-thanks', 'referred-by',
-  'thanks-save', 'state', 'oid',
-  'night-opt-1', 'night-opt-2', 'night-opt-3', 'night-opt-4',
-];
+const IDS = ['attribution-form', 'state', 'oid'];
 
 function makeEl(tag) {
   return {
@@ -67,14 +71,8 @@ function run({ live = false, fetchOk = true } = {}) {
     const t = makeEl('input'); t.name = 'channel'; t.value = value;
     ids['attribution-form'].dispatch('change', { target: t });
   };
-  const pickNight = (value, id) => {
-    const t = ids[id] || makeEl('input');
-    t.name = 'night'; t.value = value; t.checked = true;
-    ids['attribution-form'].dispatch('change', { target: t });
-  };
-  const submit = () => ids['attribution-form'].dispatch('submit', { preventDefault() {} });
 
-  return { ids, store, logged, fetches, pick, pickNight, submit };
+  return { ids, store, logged, fetches, pick };
 }
 
 // What a customer can actually read: drop script/style bodies and HTML comments,
@@ -85,169 +83,111 @@ const visibleText = html => html
   .replace(/<!--[\s\S]*?-->/g, ' ')
   .replace(/<[^>]*>/g, ' ');
 
+const SLUGS = ['friend', 'game_night', 'instagram', 'tiktok', 'search', 'facebook', 'other'];
+
 let pass = 0;
 const t = (name, fn) => { fn(); pass++; console.log('  ok  ' + name); };
 
 console.log('Attribution capture — confirmation.html\n');
 
+t('the page a Baghdad customer gets is Arabic and right-to-left', () => {
+  assert.ok(/<html lang="ar" dir="rtl">/.test(HTML), 'lang=ar dir=rtl');
+});
+
 t('the seven options are in the order Customer Love asked for', () => {
   const block = HTML.match(/<div class="opts">([\s\S]*?)<\/div>/)[1];
   const values = [...block.matchAll(/name="channel" value="([a-z_]+)"/g)].map(m => m[1]);
-  assert.deepStrictEqual(values, ['friend', 'game_night', 'instagram', 'tiktok', 'search', 'facebook', 'other']);
-  const labels = [...block.matchAll(/<span>([^<]+)<\/span>/g)].map(m => m[1]);
-  assert.deepStrictEqual(labels, [
-    'A friend told me', 'I was at a game night', 'Instagram', 'TikTok',
-    'Google or search', 'Facebook', 'Somewhere else',
-  ]);
+  assert.deepStrictEqual(values, SLUGS);
 });
 
-t('the superseded game-night wording is gone', () => {
-  assert.ok(!/I saw it at a game night/.test(HTML), '"I saw it at a game night" must not survive');
-  assert.ok(!/Other \(please specify\)/.test(HTML), '"Somewhere else" must not be relabelled');
+t('the Arabic wording is theirs, verbatim', () => {
+  const block = HTML.match(/<div class="opts">([\s\S]*?)<\/div>/)[1];
+  const labels = [...block.matchAll(/<span>([^<]+)<\/span>/g)].map(m => m[1]);
+  assert.deepStrictEqual(labels, [
+    'صديق كَلّي عنكم', 'كنت بليلة ألعاب', 'انستغرام', 'تيك توك',
+    'جوجل أو بحث', 'فيسبوك', 'من مكان ثاني',
+  ]);
+  assert.ok(HTML.includes('شنو خلاك تعرف علينا؟'), 'their question');
+  assert.ok(HTML.includes('اختياري — يساعدنا نعرف وين نكون.'), 'their optional hint');
+});
+
+t('"a friend told me" is still first, because KR5 is made of that number', () => {
+  const block = HTML.match(/<div class="opts">([\s\S]*?)<\/div>/)[1];
+  const values = [...block.matchAll(/name="channel" value="([a-z_]+)"/g)].map(m => m[1]);
+  assert.strictEqual(values[0], 'friend');
+  assert.strictEqual(values[1], 'game_night', 'the game night is second and never merged into the first');
+});
+
+t('the superseded English wording is gone from the page', () => {
+  const text = visibleText(HTML);
+  for (const gone of ['A friend told me', 'I was at a game night', 'I saw it at a game night', 'Somewhere else', 'How did you hear about us']) {
+    assert.ok(!text.includes(gone), '"' + gone + '" must not survive on an Arabic page');
+  }
+});
+
+t('both follow-ups really are cut, not just hidden', () => {
+  assert.ok(!/name="night"/.test(HTML), 'no night picker');
+  assert.ok(!/id="referred-by"/.test(HTML), 'no "who should we thank?" input');
+  assert.ok(!/followup/.test(HTML), 'no leftover follow-up markup to pay for');
+  assert.ok(!/type="submit"/.test(HTML), 'nothing to submit: one tap is the whole interaction');
 });
 
 t('no NIGHT-xx code is ever shown to a customer', () => {
-  assert.ok(/value="NIGHT-01"/.test(HTML), 'the code lives in the value attribute');
   assert.ok(!/NIGHT-/.test(visibleText(HTML)), 'a code we invented must never render on screen');
 });
 
-t('the night picker offers the three nights plus "I do not remember"', () => {
-  const block = HTML.match(/<div class="chips">([\s\S]*?)<\/div>/)[1];
-  const values = [...block.matchAll(/name="night"[^>]*value="([A-Z0-9-]+)"/g)].map(m => m[1]);
-  assert.deepStrictEqual(values, ['NIGHT-01', 'NIGHT-02', 'NIGHT-03', 'NIGHT-UNKNOWN']);
-  const labels = [...block.matchAll(/<span>([^<]+)<\/span>/g)].map(m => m[1]);
-  assert.deepStrictEqual(labels, ['Tue 14 Oct', 'Thu 22 Oct', 'Thu 29 Oct', 'I do not remember']);
+t('the question sits after payment, never inside the checkout', () => {
+  const paid = HTML.indexOf('تم الدفع');
+  const question = HTML.indexOf('id="attribution"');
+  assert.ok(paid > -1 && question > paid, 'the question comes after the paid confirmation');
+  assert.ok(!/\brequired\b/.test(HTML), 'nothing on this page is required');
 });
 
 t('nothing is pre-selected and nothing is saved on load', () => {
   const r = run();
   assert.strictEqual(r.logged.length, 0, 'no save before a tap');
-  assert.strictEqual(r.ids['followup-night'].hidden, true, 'night picker starts hidden');
-  assert.strictEqual(r.ids['followup-thanks'].hidden, true, 'thank-you starts hidden');
   assert.strictEqual(r.ids.state.hidden, true, 'no message before a tap');
   const preChecked = [...HTML.matchAll(/<input\b[^>]*>/g)].filter(m => /\schecked[\s/>=]/.test(m[0]));
   assert.deepStrictEqual(preChecked, [], 'no input carries a checked attribute');
 });
 
-t('one tap on a plain option saves the channel and shows no follow-up', () => {
+t('one tap saves the channel and says thank you in Arabic', () => {
   const r = run();
   r.pick('instagram');
   assert.strictEqual(r.logged.length, 1, 'exactly one save per tap');
   const p = r.logged[0][1];
   assert.strictEqual(p.attribution_channel, 'instagram');
-  assert.strictEqual(p.attribution_night_code, null);
-  assert.strictEqual(p.attribution_referred_by, null);
+  assert.strictEqual(p.attribution_night_code, null, 'filled by hand, not asked here');
+  assert.strictEqual(p.attribution_referred_by, null, 'filled by hand, not asked here');
   assert.strictEqual(p.order_id, 'BOR-10042', 'answer joins to the order');
   assert.ok(p.attribution_answered_at, 'timestamp set');
   assert.strictEqual(p.attribution_source, 'order_confirmation');
-  assert.strictEqual(r.ids['followup-night'].hidden, true, 'no extra line for Instagram');
-  assert.strictEqual(r.ids['followup-thanks'].hidden, true);
-  assert.ok(/thank you/i.test(r.ids.state.textContent), 'customer sees a thank you');
+  assert.ok(/شكراً/.test(r.ids.state.textContent), 'customer sees a thank you');
 });
 
-t('every one of the seven options saves its own slug', () => {
-  const slugs = ['friend', 'game_night', 'instagram', 'tiktok', 'search', 'facebook', 'other'];
-  for (const s of slugs) {
+t('every one of the seven options saves its own option id', () => {
+  for (const s of SLUGS) {
     const r = run();
     r.pick(s);
     assert.strictEqual(r.logged[0][1].attribution_channel, s, s + ' saves as ' + s);
   }
 });
 
-t('"A friend told me" reveals the thank-you line only', () => {
-  const r = run();
-  r.pick('friend');
-  assert.strictEqual(r.ids['followup-thanks'].hidden, false);
-  assert.strictEqual(r.ids['followup-night'].hidden, true, 'a friend referral is not a night');
-});
-
-t('"I was at a game night" reveals BOTH the night picker and the thank-you line', () => {
+t('we store the option id, never the Arabic string', () => {
   const r = run();
   r.pick('game_night');
-  assert.strictEqual(r.ids['followup-night'].hidden, false);
-  assert.strictEqual(r.ids['followup-thanks'].hidden, false, 'most people at a table were brought by someone');
-});
-
-t('the channel is already stored before any follow-up is answered', () => {
-  const r = run();
-  r.pick('game_night');
-  assert.strictEqual(r.logged.length, 1, 'channel saved on the tap, not on submit');
-  assert.strictEqual(r.logged[0][1].attribution_channel, 'game_night');
-  assert.strictEqual(r.logged[0][1].attribution_night_code, null, 'skipping the night costs nothing');
-});
-
-t('tapping a night saves its code with no save button', () => {
-  const r = run();
-  r.pick('game_night');
-  r.pickNight('NIGHT-02', 'night-opt-2');
-  assert.strictEqual(r.logged.length, 2, 'one tap, one save');
-  assert.strictEqual(r.logged[1][1].attribution_night_code, 'NIGHT-02');
-  assert.strictEqual(r.logged[1][1].attribution_channel, 'game_night');
-  assert.strictEqual(r.logged[1][1].order_id, 'BOR-10042');
-});
-
-t('"I do not remember" is stored as NIGHT-UNKNOWN, not as null', () => {
-  const r = run();
-  r.pick('game_night');
-  r.pickNight('NIGHT-UNKNOWN', 'night-opt-4');
-  assert.strictEqual(r.logged[1][1].attribution_night_code, 'NIGHT-UNKNOWN');
-});
-
-t('a night code and a referrer are stored as two separate fields on one order', () => {
-  const r = run();
-  r.pick('game_night');
-  r.pickNight('NIGHT-02', 'night-opt-2');
-  r.ids['referred-by'].value = '  Omar  ';
-  r.submit();
-  const p = r.logged[2][1];
+  const p = r.logged[0][1];
   assert.strictEqual(p.attribution_channel, 'game_night');
-  assert.strictEqual(p.attribution_night_code, 'NIGHT-02');
-  assert.strictEqual(p.attribution_referred_by, 'Omar', 'trimmed');
-  assert.strictEqual(p.order_id, 'BOR-10042');
-  assert.ok(/let them know/i.test(r.ids.state.textContent));
+  assert.ok(!/[؀-ۿ]/.test(JSON.stringify(p)), 'no Arabic text travels in the payload');
 });
 
-t('the thank-you name is stored against the same order for a friend referral', () => {
+t('changing the answer overwrites it and keeps one answer per order', () => {
   const r = run();
-  r.pick('friend');
-  r.ids['referred-by'].value = 'Sara';
-  r.submit();
-  const p = r.logged[1][1];
-  assert.strictEqual(p.attribution_channel, 'friend');
-  assert.strictEqual(p.attribution_referred_by, 'Sara');
-  assert.strictEqual(p.attribution_night_code, null);
-});
-
-t('changing the answer clears a stale night code and a stale name', () => {
-  const r = run();
-  r.pick('game_night');
-  r.pickNight('NIGHT-01', 'night-opt-1');
-  r.ids['referred-by'].value = 'Omar';
   r.pick('tiktok');
-  assert.strictEqual(r.ids['referred-by'].value, '', 'stale name cleared');
-  assert.strictEqual(r.ids['night-opt-1'].checked, false, 'stale night untapped');
-  assert.strictEqual(r.ids['followup-night'].hidden, true);
-  assert.strictEqual(r.ids['followup-thanks'].hidden, true);
-  const p = r.logged[2][1];
-  assert.strictEqual(p.attribution_channel, 'tiktok');
-  assert.strictEqual(p.attribution_night_code, null, 'TikTok cannot carry a night code');
-  assert.strictEqual(p.attribution_referred_by, null);
-});
-
-t('switching from a game night to a friend keeps the thank-you, drops the night', () => {
-  const r = run();
-  r.pick('game_night');
-  r.pickNight('NIGHT-03', 'night-opt-3');
   r.pick('friend');
-  assert.strictEqual(r.ids['followup-thanks'].hidden, false);
-  assert.strictEqual(r.ids['followup-night'].hidden, true);
-  assert.strictEqual(r.logged[2][1].attribution_night_code, null);
-});
-
-t('submitting with no option picked does nothing', () => {
-  const r = run();
-  r.submit();
-  assert.strictEqual(r.logged.length, 0);
+  assert.strictEqual(r.logged.length, 2, 'each tap saves');
+  assert.strictEqual(r.logged[1][1].attribution_channel, 'friend', 'the last tap is the answer');
+  assert.strictEqual(r.logged[1][1].order_id, 'BOR-10042');
 });
 
 t('live mode POSTs the payload to the order endpoint', () => {
@@ -265,18 +205,9 @@ t('a failed write is not silent: it queues locally and offers a retry', async ()
   const q = JSON.parse(r.store['bordiiiz.attribution.queue']);
   assert.strictEqual(q.length, 1, 'answer queued, not lost');
   assert.strictEqual(q[0].attribution_channel, 'facebook');
-  assert.ok(/could not save/i.test(r.ids.state.textContent), 'customer is told');
-  assert.ok(/already paid/i.test(r.ids.state.textContent), 'no dead end: order is safe');
+  assert.ok(/ما كَدرنا نحفظها/.test(r.ids.state.textContent), 'customer is told, in Arabic');
+  assert.ok(/طلبك مدفوع/.test(r.ids.state.textContent), 'no dead end: the order is safe and the page says so');
   assert.ok(r.ids.state.children.some(c => c.tagName === 'button'), 'a retry button exists');
-});
-
-t('a failed night write queues the night code too', async () => {
-  const r = run({ live: true, fetchOk: false });
-  r.pick('game_night');
-  r.pickNight('NIGHT-01', 'night-opt-1');
-  await new Promise(res => setImmediate(res));
-  const q = JSON.parse(r.store['bordiiiz.attribution.queue']);
-  assert.ok(q.some(p => p.attribution_night_code === 'NIGHT-01'), 'night code queued, not lost');
 });
 
 t('the retry button re-sends the queued answer', async () => {

@@ -18,8 +18,11 @@
 
   "cod_cap_today": 0,
   "_cod_note": "COD_CAP_TODAY from BOR-30, published by Ops & Fulfilment Lead every morning. Ops owns the arithmetic, this page owns the switch. 0 or missing or not an integer = cash on delivery is ABSENT from the page, not greyed out. Default closed: every unreadable value means closed, because a failure that opens COD spends money we do not hold. Only Ops changes this number.",
-  "delivery_iqd": 5000,
-  "_delivery_note": "Baghdad-city delivery fee in IQD. Owner: Ops & Fulfilment Lead, BOR-13 delivery-zones, 9 Oct 2026. This is a market rate, not a courier quote; Ops sends the revised row the day a courier quotes. null = we tell the customer in the WhatsApp chat instead. Not a dead end either way: a human answers.",
+  "delivery_model": "hand_delivery_first_10",
+  "_delivery_model_note": "Which of our two delivery models the page is allowed to promise. 'hand_delivery_first_10' = the Founder's BOR-45 ruling and Ops' own BOR-35 commitment: orders 1-10 are hand-delivered by a paid driver inside Baghdad, ~2 days from payment, and the fee is told to the customer in the WhatsApp chat because BOR-40 has not priced it yet. 'courier_zones' = render delivery_zones below instead. Anything else reads as hand_delivery_first_10. The zone table is NOT rendered while this is the hand-delivery model, because publishing 5,000 IQD / 2-5 days today would contradict the promise the Founder actually ruled on, and a customer must never be able to find two different answers from us.",
+
+  "delivery_iqd": null,
+  "_delivery_note": "Baghdad-city delivery fee in IQD, used only by the courier_zones model. Owner: Ops & Fulfilment Lead, BOR-13 delivery-zones. null = we tell the customer in the WhatsApp chat before they confirm. Not a dead end: a human answers.",
 
   "ship_cutoff_local": "14:00",
   "timezone": "Asia/Baghdad",

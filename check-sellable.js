@@ -36,21 +36,59 @@ const missing = (v) => v === null || v === undefined || v === '';
 const catalog = read('catalog.json');
 if (catalog) {
   const games = catalog.games || [];
-  const sellable = games.filter((g) =>
-    !missing(g.payment_link) &&
-    Number.isInteger(g.stock) && g.stock > 0 &&
-    g.payment_link_max_payments === g.stock
-  );
+  const mp = catalog.money_path || {};
+  // A box we can actually produce: a sealed one we hold, or one we committed to
+  // buy. Either way a whole number above zero, and the link capped at it.
+  const count = (g) => (Number.isInteger(g.stock) && g.stock > 0 ? g.stock
+    : g.stock === 0 && Number.isInteger(g.backorder_cap) && g.backorder_cap > 0 ? g.backorder_cap : 0);
+  const sellable = games.filter((g) => !missing(g.payment_link) && count(g) > 0 && g.payment_link_max_payments === count(g));
+
   console.log(`\nPATH A — catalog.json, payment link, ${games.length} games`);
   console.log(`  can produce a PAID order: ${sellable.length} of ${games.length}`);
-  console.log(`  captures money on the page: yes, a payment link takes a card`);
-  console.log(`  stock guarded at point of sale: yes, build.js refuses a button unless cap === stock`);
-  if (sellable.length === 0) {
+  console.log(`  captures money on the page: ${mp.card_acquiring === false ? 'NO — card acquiring is CLOSED, not pending (BOR-29 ruling)' : 'yes, a payment link takes a card'}`);
+  console.log(`  stock guarded at point of sale: yes, build.js refuses a button unless the cap equals the sellable count`);
+
+  if (mp.card_acquiring === false) {
+    // This is the finding that moved. It is no longer "the Founder has not sent
+    // a payment link yet" — it is "there will be no payment link in October".
+    add('BLOCK', 'catalog.json',
+      'payment_link is null on every title BY RULING, not by delay: no Iraqi gateway onboards an unregistered company inside 5 days (BOR-29). A pay-button-plus-link storefront therefore cannot go live in October at all',
+      'Head of Product & Tech — build the wallet money screen from BOR-29 `checkout-copy-ar` instead of waiting on a link that is not coming');
+  } else if (sellable.length === 0) {
     add('BLOCK', 'catalog.json', `0 of ${games.length} games can take money — no payment links exist`,
       'Founder & CEO (payment account is a money decision) + Head of Supply & Catalog (price, stock, photo)');
   }
+
+  const noCount = games.filter((g) => count(g) === 0);
+  if (noCount.length) {
+    add('BLOCK', 'catalog.json',
+      `${noCount.length} of ${games.length} titles have no sellable count — no sealed stock and no buy commitment (${noCount.map((g) => g.slug).join(', ')})`,
+      'Head of Supply & Catalog — BOR-46. A whole number above 0 in stock, or in backorder_cap with stock 0');
+  }
 } else {
   add('BLOCK', 'catalog.json', 'catalog missing or unparseable', 'Head of Product & Tech');
+}
+
+// ------------------------------------------- the money path the board ruled on
+
+const mp = (catalog && catalog.money_path) || null;
+if (mp) {
+  const proven = !missing(mp.proven_1000_iqd_at);
+  console.log(`\nMONEY PATH — ${mp.method || 'unnamed'}${mp.method_backup ? ' (backup: ' + mp.method_backup + ')' : ''}`);
+  console.log(`  can a wallet prepay become payment_state=paid: ${mp.paid_requires_founder_confirmation ? 'yes, after the Founder confirms the transfer' : 'unknown'}`);
+  console.log(`  1,000 IQD has actually moved through it: ${proven ? 'yes, ' + mp.proven_1000_iqd_at : 'NO'}`);
+  console.log(`  cash on delivery: ${mp.cod ? 'on' : 'off, and absent from the page entirely'}`);
+
+  if (!proven) {
+    add('BLOCK', 'catalog.json/money_path',
+      'no payment method may be NAMED on the live page until 1,000 IQD has actually moved through it (BOR-29 hard gate). Until then the page ships WhatsApp-only and 14 Oct produces written orders, not paid ones',
+      'Founder & CEO — move 1,000 IQD through the wallet and record the timestamp in money_path.proven_1000_iqd_at by Mon 13 Oct 21:00');
+  }
+  if (mp.paid_requires_founder_confirmation) {
+    add('NOTE', 'catalog.json/money_path',
+      'a written row moves to paid only on the Founder confirming the money. Correct: I do not hold cash and I do not reconcile it. Attribution does not wait for it — a written row still counts for KR5',
+      'Founder & CEO confirms money; Head of Product & Tech owns the flag');
+  }
 }
 
 // --------------------------------------------- path B: Arabic WhatsApp order
@@ -64,13 +102,19 @@ if (ar) {
   console.log(`\nPATH B — ar/config.json, WhatsApp order, ${games.length} games`);
   console.log(`  can produce a PAID order: 0 of ${games.length}`);
   console.log(`  captures money on the page: NO — wa.me opens a chat, no card is taken`);
+  console.log(`  can still reach payment_state=paid: yes, by wallet prepay plus the Founder confirming (BOR-45 ruling)`);
   console.log(`  stock guarded at point of sale: NO — ${noStock.length} of ${games.length} games have no stock field at all`);
   console.log(`  order buttons currently live: ${waOrder ? 'yes' : 'no, pre-launch (whatsapp number empty)'}`);
 
-  // The finding that matters. This is not a style note.
-  add('BLOCK', 'ar/config.json',
-    `a wa.me order path captures no money, so every one of its orders lands as payment_state=written and never as paid — KR3 counts paid only`,
-    'Founder & CEO — decide: payment link, or WhatsApp plus a named way to collect money');
+  // I had this one wrong and the Founder's ruling corrected it. A wa.me order is
+  // NOT condemned to payment_state=written: the customer prepays by wallet, the
+  // Founder confirms the transfer, and the row becomes paid with a real paid_at.
+  // What this path cannot do is pay itself, which is a different problem — it
+  // means every paid row waits on one human, so the gate is now the proof that
+  // money can move at all, tracked on money_path above.
+  add('NOTE', 'ar/config.json',
+    'a wa.me order captures no money on the page, but it is not stuck at written: wallet prepay plus a Founder confirmation is a paid row. The cost is that every paid row waits on one person',
+    'Founder & CEO confirms each transfer; Head of Product & Tech owns the written -> paid flag');
 
   if (noStock.length) {
     add('BLOCK', 'ar/config.json',
@@ -130,10 +174,13 @@ if (ar) {
 
 if (catalog && catalog.shop) {
   const s = catalog.shop;
-  const gaps = ['currency', 'human_name', 'human_phone', 'delivery_promise', 'postal_address'].filter((f) => missing(s[f]));
+  // The Arabic field names are the live ones — a Baghdad customer reads Arabic,
+  // so an English-only value is not a filled trust field.
+  const TRUST = ['city_ar', 'currency_ar', 'human_name_ar', 'human_phone', 'delivery_promise_ar', 'postal_address_ar'];
+  const gaps = TRUST.filter((f) => missing(s[f]));
   if (gaps.length) {
     add('BLOCK', 'catalog.json/shop',
-      `${gaps.length} of 5 trust fields empty (${gaps.join(', ')}) — payment logos without a real address and a real human are a lie`,
+      `${gaps.length} of ${TRUST.length} trust fields empty (${gaps.join(', ')}) — a customer who hesitates does not come back, and a page with no reachable human is why they hesitate`,
       'Founder & CEO');
   }
 }

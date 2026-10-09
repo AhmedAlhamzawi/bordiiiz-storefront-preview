@@ -126,15 +126,29 @@ SELLABLE_ZONES = [z for z in ZONES if z.get("sellable") and isinstance(z.get("pr
 CLOSED_ZONES = [z for z in ZONES if not z.get("sellable")]
 CITY = next((z for z in SELLABLE_ZONES if z.get("zone") == "baghdad_city"), None)
 
-if CITY:
+# Two delivery models exist and they do not agree. Orders 1-10 are hand
+# delivered (Founder's BOR-45 ruling, Ops' own BOR-35 commitment, ~2 days); the
+# courier zone table is the model from order 11. The page promises exactly one
+# of them, and the default is the one the Founder ruled on. A customer who can
+# find two different answers from us has caught us lying once.
+MODEL = str(CFG.get("delivery_model") or "hand_delivery_first_10").strip()
+COURIER = MODEL == "courier_zones"
+
+if not COURIER:
+    delivery_line = "التوصيل داخل بغداد بس، ونوصلها باليد خلال يومين من الدفع."
+    zones_note = "أجرة التوصيل نقولها لك بالواتساب قبل ما تأكد الطلب — ما نفاجئك بسعر عند الباب."
+elif CITY:
     delivery_line = (
         f'التوصيل داخل بغداد: {iqd(CITY["price_iqd"])} د.ع — '
         f'يوصلك خلال {CITY["min_days"]}–{CITY["max_days"]} أيام عمل.'
     )
+    zones_note = ""
 elif isinstance(DELIVERY, int):
     delivery_line = f"التوصيل داخل بغداد: {iqd(DELIVERY)} د.ع."
+    zones_note = ""
 else:
     delivery_line = "أجرة التوصيل داخل بغداد نقولها لك بالواتساب قبل ما تأكد الطلب — ما نفاجئك بسعر عند الباب."
+    zones_note = ""
 
 # Ops killed "order before 14:00 and it ships today" and was right: we hold no
 # stock, so on a day with no wholesaler run nothing can leave the house. "We

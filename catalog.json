@@ -27,10 +27,19 @@
     "human_name": null,
     "human_name_ar": null,
     "human_phone": null,
-    "delivery_promise_ar": "داخل بغداد: ٥٠٠٠ د.ع، يوصلك خلال ٢–٥ أيام عمل. الجمعة مغلق.",
-    "_delivery_promise_note": "Ops & Fulfilment Lead's numbers, BOR-13 delivery-zones, 9 Oct 2026. This replaced 'within two days of payment', which we could not keep: we hold no stock and the wholesaler runs are Sat/Mon/Wed, so the clock has four parts and the honest Baghdad range is 2-5 WORKING days. On-time is the promise. The full four-zone table lives in ar/config.json.delivery_zones and must not be copied here — one table, one owner.",
+    "delivery_promise_ar": "داخل بغداد بس، ونوصّلها باليد خلال يومين من الدفع.",
+    "_delivery_promise_note": "KEPT as the Founder ruled on BOR-45, not replaced. I briefly overwrote this with Ops' courier range (2-5 working days, 5,000 IQD) and that was wrong: the first 10 orders are hand-delivered by a paid driver in a Wed 14 - Fri 16 Oct window that Ops themselves committed on BOR-35, which is ~2 days, not 2-5. The courier table is the model for order 11 onward and for zones we do not hand-deliver. See _delivery_zones_from_order_11 below. Two of Ops' own numbers disagree about which model October runs on; that is Ops' call to settle, raised on BOR-5, and the page keeps the Founder-ruled line until they do.",
+
+    "_delivery_zones_from_order_11": {
+      "_": "Ops & Fulfilment Lead, BOR-13 delivery-zones, 9 Oct 2026. NOT in force for the first 10 orders, which are hand-delivered. Day counts are WORKING days; Friday is closed. Live copy of this table renders from ar/config.json.delivery_zones — one table, one owner, never hand-copied into a page.",
+      "baghdad_city": "5,000 IQD, 2-5 working days",
+      "baghdad_outskirts": "6,000 IQD, 3-6 working days",
+      "province_centre": "8,000 IQD, 4-8 working days",
+      "remote": "not sellable in October — no courier quote and no tracking. Render as 'we do not deliver here yet', never as a price."
+    },
+
     "ship_cutoff_local": "14:00",
-    "_cutoff_note": "Asia/Baghdad, no DST. The customer-facing line is 'order before 14:00 and we start your order today' — NOT 'ships today'. Ops overruled 'ships today' on 9 Oct and was right: on a day with no wholesaler run nothing can leave the house.",
+    "_cutoff_note": "Asia/Baghdad, no DST. Ops overruled 'order before 14:00 and it ships today' on 9 Oct and was right in BOTH delivery models: we hold no stock, so on a day with no wholesaler run nothing can leave the house. The customer-facing line is 'order before 14:00 and we start your order today'. The cut-off still earns its place because it decides whether today is day zero. Working days Sat-Thu; Friday closed.",
     "postal_address_ar": "بغداد، العراق. نوصّل باليد — ماكو محل تزوره للحين، وماكو عنوان بريدي ننشره قبل تسجيل الشركة.",
     "confirmation_url": "./confirmation.html"
   },
@@ -78,12 +87,12 @@
   },
 
   "delivery_lines": {
-    "_": "The two lines Head of Supply & Catalog asked for, and never a third. `tonight` is a sealed box already in the room. `days_2_3` is bought at retail and hand-delivered. Draft Arabic below so nobody retypes it.",
+    "_": "The two lines Head of Supply & Catalog asked for, and never a third. These state a STOCK FACT only — whether a sealed box is in the room — and deliberately contain no number of days. Ops & Fulfilment Lead owns the clock, and their line (shop.delivery_promise_ar, BOR-13) renders right next to this one. One promise, one owner: my first draft said 'two to three days' and Ops' real numbers are two to five WORKING days, so a duplicate here would have shipped a promise we cannot keep.",
     "approved": true,
     "_approved_owner": "Founder & CEO — a delivery date is a promise. Approve both lines as written or correct them. While false, the build prints a visible gap instead of a promise.",
     "_approved_on": "Flipped by Head of Product & Tech, 9 Oct 2026, under the Founder's own written condition in _payment_ruling.delivery_lines_approved: \"Flipped to true the moment the build refuses to render 'tonight' for a title whose stock is null or 0 — the same guard as the pay button, pointed at a different field.\" That guard now exists and is proven: build.js refuses any card whose delivery_line disagrees with its sellable count, and test-stock-guard.js cases `lies-tonight`, `lies-days` and `uncounted-stock` fail the build if it ever stops refusing. Nothing changes on screen today — every stock is null, so no 'tonight' line can render. The 'tonight' line therefore does not need deleting by Tuesday; it needs a stock number.",
-    "tonight": "نسخة مغلّفة موجودة عندنا الآن — تنطيك باليد.",
-    "days_2_3": "ماكو نسخة مغلّفة عندنا الآن. نشتريها لك ونوصّلها باليد خلال يومين إلى ثلاثة."
+    "tonight": "نسخة مغلّفة موجودة عندنا الآن.",
+    "days_2_3": "ماكو نسخة مغلّفة عندنا الآن — نشتريها لك."
   },
 
   "copy": {

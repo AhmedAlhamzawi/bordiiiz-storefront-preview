@@ -1,11 +1,11 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Order confirmed — Bordiiiz</title>
-<meta name="description" content="Order confirmation. Preview build.">
+<title>تم الطلب — بورديز</title>
+<meta name="description" content="تأكيد الطلب. نسخة تجريبية.">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -15,19 +15,20 @@
 }
 html{-webkit-text-size-adjust:100%}
 body{
-font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+font:16px/1.65 -apple-system,BlinkMacSystemFont,"SF Arabic","Segoe UI","Noto Naskh Arabic","Droid Arabic Naskh",Tahoma,Arial,sans-serif;
 color:var(--ink);background:var(--bg);
 }
 img,svg{display:block;max-width:100%}
 a{color:inherit}
+bdi{direction:ltr;unicode-bidi:isolate}
 .wrap{max-width:720px;margin:0 auto;padding:0 var(--pad)}
 
-.preview{background:#14110f;color:#fbf8f4;font-size:13px;line-height:1.4;padding:10px var(--pad);text-align:center}
+.preview{background:#14110f;color:#fbf8f4;font-size:13px;line-height:1.5;padding:10px var(--pad);text-align:center}
 .preview b{color:#f0b429}
 
 header{border-bottom:1px solid var(--line);background:var(--card)}
 .bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--pad);max-width:720px;margin:0 auto}
-.logo{font-size:19px;font-weight:700;letter-spacing:-.4px;text-decoration:none}
+.logo{font-size:19px;font-weight:700;letter-spacing:-.4px;text-decoration:none;direction:ltr}
 .logo span{color:var(--accent)}
 
 .steps{display:flex;gap:8px;margin:20px 0 4px;font-size:13px;color:var(--ink2)}
@@ -36,17 +37,17 @@ header{border-bottom:1px solid var(--line);background:var(--card)}
 .done{padding:26px 0 4px}
 .tick{width:40px;height:40px;border-radius:50%;background:var(--ok);display:grid;place-items:center;margin-bottom:14px}
 .tick svg{width:22px;height:22px}
-.done h1{font-size:26px;line-height:1.18;letter-spacing:-.5px;margin-bottom:8px}
+.done h1{font-size:26px;line-height:1.3;margin-bottom:8px}
 .done p{color:var(--ink2);max-width:42ch}
 .done .oid{font-weight:700;color:var(--ink)}
 
 .panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px var(--pad);margin:22px 0}
-.panel h2{font-size:18px;line-height:1.25;letter-spacing:-.2px;margin-bottom:4px;text-transform:none;color:var(--ink)}
+.panel h2{font-size:18px;line-height:1.4;margin-bottom:4px;color:var(--ink)}
 .panel .hint{font-size:13.5px;color:var(--ink2);font-style:italic}
 
 .rows{margin-top:14px;font-size:15px}
 .rows>div{padding:11px 0;border-top:1px solid var(--line)}
-.rows dt{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink2)}
+.rows dt{font-size:12px;font-weight:700;letter-spacing:.02em;color:var(--ink2)}
 .rows dd{margin:3px 0 0}
 .rows a{color:var(--ink)}
 
@@ -65,55 +66,24 @@ min-height:48px;display:flex;align-items:center;
 .opt input:checked+span{border-color:var(--accent);background:#fdf1ee;font-weight:600}
 .opt input:disabled+span{opacity:.5}
 
-.followup{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
-.followup[hidden]{display:none}
-.followup .flabel,.followup label{display:block;font-size:16px;font-weight:700;margin-bottom:2px}
-.followup .hint{display:block;margin-bottom:10px}
-.fr{display:flex;gap:8px;flex-wrap:wrap}
-
-/* night picker: the customer sees dates they recognise. The NIGHT-xx code we
-   invented is in the value attribute only and never renders on screen. */
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{position:relative;display:block}
-.chip input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
-.chip span{
-display:flex;align-items:center;border:1px solid var(--line);border-radius:999px;
-padding:11px 16px;font-size:15px;background:var(--bg);min-height:48px;
-}
-.chip input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
-.chip input:checked+span{border-color:var(--accent);background:#fdf1ee;font-weight:600}
-
-input[type=text]{
-flex:1 1 180px;min-width:0;font:inherit;color:inherit;
-border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:var(--bg);min-height:48px;
-}
-input[type=text]:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
-button{
-font:inherit;font-weight:700;cursor:pointer;border:1px solid var(--accent);
-background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:12px 18px;min-height:48px;
-}
-button[disabled]{opacity:.55;cursor:default}
-
 .state{margin-top:12px;font-size:14px;display:flex;gap:7px;align-items:flex-start}
 .state[hidden]{display:none}
 .state.ok{color:var(--ok);font-weight:600}
 .state.warn{color:#9a5b00}
-.state .retry{background:none;border:0;color:inherit;font:inherit;font-weight:700;text-decoration:underline;padding:0;min-height:0}
+.state .retry{font:inherit;font-weight:700;cursor:pointer;background:none;border:0;color:inherit;text-decoration:underline;padding:0;min-height:0}
 
 .next{font-size:14px;color:var(--ink2);margin-top:18px}
 .next a{color:var(--ink);text-decoration:underline}
 
 footer{margin:30px 0 0;border-top:1px solid var(--line);background:var(--card)}
 .foot{max-width:720px;margin:0 auto;padding:20px var(--pad) 32px;font-size:13.5px;color:var(--ink2);display:flex;flex-direction:column;gap:10px}
-.pay{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
-.pay b{font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:5px;padding:4px 7px;color:var(--ink2);font-weight:700}
 .foot a{color:var(--ink);text-decoration:underline}
 </style>
 </head>
 <body>
 
 <p class="preview">
-  <b>PREVIEW BUILD</b> — wording on this page is pending Founder sign-off. No orders are taken here.
+  <b>نسخة تجريبية</b> — الصياغة بانتظار موافقة المؤسس. ماكو طلبات تستلم هنا.
 </p>
 
 <header>
@@ -125,138 +95,115 @@ footer{margin:30px 0 0;border-top:1px solid var(--line);background:var(--card)}
 <main class="wrap">
 
   <ol class="steps">
-    <li>1. Pick</li>
-    <li>2. Pay</li>
-    <li>3. Done</li>
+    <li>١. تختار</li>
+    <li>٢. تدفع</li>
+    <li>٣. خلص</li>
   </ol>
 
   <section class="done">
     <div class="tick" aria-hidden="true">
       <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
     </div>
-    <h1>Paid. Your evening is on its way.</h1>
-    <p>Order <span class="oid" id="oid">BOR-10042</span> — a confirmation is on its way to your email. We pack and hand over within one working day.</p>
+    <h1>تم الدفع. سهرتك بالطريق.</h1>
+    <p>الطلب <span class="oid" id="oid">BOR-10042</span> — واحد مننا يتصل بك ويتفق على وقت التسليم.</p>
   </section>
 
   <!-- Fulfilment block (asked for by Ops on BOR-13). Driven by two order fields:
-         delivery_promised_by  frozen at order time; the date we defend, not the
+         delivery_promised_by  frozen at order time; the date we defend, not a
                                courier's estimate. Ops's on-time % measures against it.
-         tracking_number       empty -> this block never uses the word "shipped".
-                               set   -> carrier + number + tracked link appear here
-                                        and go out in the shipping email.
-       An order with no tracking number is not shipped. The page tells the same
-       truth as the order log, so the status is never a lie. -->
+         handover_confirmed    empty -> this block never says the box was handed over.
+       Delivery is a paid driver inside Baghdad, 10 hand-delivered drops committed
+       by Ops on BOR-35 — not a courier company, and not the Founder carrying boxes
+       (BOR-10). So there is no tracking number to show, and this block must never
+       say one is coming. The date is deliberately not hard-coded: an unapproved
+       date on a customer's screen is a promise nobody made. Owner: Founder & CEO. -->
   <section class="panel">
-    <h2>Arriving Mon 13 &ndash; Wed 15 Oct</h2>
-    <p class="hint">That is our promise, not the courier's estimate. If it is late, that is ours to fix &mdash; tell us.</p>
+    <h2>وقت التسليم</h2>
+    <p class="hint">هذا وعدنا إحنا، مو تقدير شركة توصيل. إذا تأخر، هذا علينا — كَلِّنا.</p>
     <dl class="rows">
-      <div><dt>Status</dt><dd>Packed. Waiting for the courier to collect.</dd></div>
-      <div><dt>Tracking</dt><dd>Appears here the moment we hand the box over, and we email it to you at the same time.</dd></div>
-      <div><dt>Changed your mind?</dt><dd><a href="./returns.html">Send it back within 14 days</a> &mdash; you do not need to email anyone.</dd></div>
+      <div><dt>الحالة</dt><dd>الطلب وصلنا. واحد مننا يتصل بك اليوم ويتفق على الوقت والمكان.</dd></div>
+      <div><dt>مَن يوصّلها</dt><dd>سائق نعرفه ونحن ندفع له، داخل بغداد. واحد مننا مسؤول عن طلبك ويبقى على الخط حتى توصلك.</dd></div>
+      <div><dt>بدّلت رايك؟</dt><dd><a href="./returns.html">ترجّعها خلال ١٤ يوم</a> — ما تحتاج تدز إيميل لأي أحد.</dd></div>
     </dl>
   </section>
 
-  <!-- Attribution question. Wording owned by Customer Love Lead (BOR-9 / BOR-24),
-       option list and both follow-ups per their 9 Oct revision on BOR-24.
-       Placement: after payment succeeds, never inside the checkout flow. -->
+  <!-- Attribution question. Wording owned by Customer Love Lead (BOR-9 / BOR-24).
+       The Arabic below is their 9 Oct revision and it is the version that ships —
+       the English wording they sent first is superseded, because every string a
+       customer reads is Arabic (Founder: Baghdad, IQD, Arabic, phone first).
+       Seven options, single choice, optional, never a blocker on the pay button.
+       Placement: after payment succeeds, never inside the checkout flow.
+       Both follow-ups ("which night?" and "who should we thank?") are CUT by the
+       field's owner on 9 Oct. Customer Love fills night_code and referred_by by
+       hand from the paper table sheets, which is why those fields still travel in
+       the payload below as nulls instead of being deleted. The cut version is in
+       git at 678b541 if they ever want the branching back. -->
   <section class="panel" id="attribution">
-    <h2>How did you hear about us?</h2>
-    <p class="hint">Optional — it helps us know where to show up.</p>
+    <h2>شنو خلاك تعرف علينا؟</h2>
+    <p class="hint">اختياري — يساعدنا نعرف وين نكون.</p>
 
     <form id="attribution-form" novalidate>
       <fieldset>
-        <legend>How did you hear about us?</legend>
+        <legend>شنو خلاك تعرف علينا؟</legend>
         <div class="opts">
-          <label class="opt"><input type="radio" name="channel" value="friend"><span>A friend told me</span></label>
-          <label class="opt"><input type="radio" name="channel" value="game_night"><span>I was at a game night</span></label>
-          <label class="opt"><input type="radio" name="channel" value="instagram"><span>Instagram</span></label>
-          <label class="opt"><input type="radio" name="channel" value="tiktok"><span>TikTok</span></label>
-          <label class="opt"><input type="radio" name="channel" value="search"><span>Google or search</span></label>
-          <label class="opt"><input type="radio" name="channel" value="facebook"><span>Facebook</span></label>
-          <label class="opt"><input type="radio" name="channel" value="other"><span>Somewhere else</span></label>
+          <label class="opt"><input type="radio" name="channel" value="friend"><span>صديق كَلّي عنكم</span></label>
+          <label class="opt"><input type="radio" name="channel" value="game_night"><span>كنت بليلة ألعاب</span></label>
+          <label class="opt"><input type="radio" name="channel" value="instagram"><span>انستغرام</span></label>
+          <label class="opt"><input type="radio" name="channel" value="tiktok"><span>تيك توك</span></label>
+          <label class="opt"><input type="radio" name="channel" value="search"><span>جوجل أو بحث</span></label>
+          <label class="opt"><input type="radio" name="channel" value="facebook"><span>فيسبوك</span></label>
+          <label class="opt"><input type="radio" name="channel" value="other"><span>من مكان ثاني</span></label>
         </div>
       </fieldset>
-
-      <!-- Game-night branch only. Dates on screen, NIGHT-xx codes in the value.
-           One tap saves; there is no button to miss. Night list comes from BOR-12. -->
-      <fieldset class="followup" id="followup-night" hidden>
-        <legend>Which night were you at?</legend>
-        <span class="flabel" aria-hidden="true">Which night were you at?</span>
-        <span class="hint">Optional.</span>
-        <div class="chips">
-          <label class="chip"><input type="radio" name="night" id="night-opt-1" value="NIGHT-01"><span>Tue 14 Oct</span></label>
-          <label class="chip"><input type="radio" name="night" id="night-opt-2" value="NIGHT-02"><span>Thu 22 Oct</span></label>
-          <label class="chip"><input type="radio" name="night" id="night-opt-3" value="NIGHT-03"><span>Thu 29 Oct</span></label>
-          <label class="chip"><input type="radio" name="night" id="night-opt-4" value="NIGHT-UNKNOWN"><span>I do not remember</span></label>
-        </div>
-      </fieldset>
-
-      <!-- Thank-you branch. Shows on "A friend told me" AND on "I was at a game
-           night" — most people at a table were brought by someone. Its own field,
-           so one customer can carry a night code and a referrer at the same time. -->
-      <div class="followup" id="followup-thanks" hidden>
-        <label for="referred-by">Who should we thank?</label>
-        <span class="hint">Optional, first name is fine.</span>
-        <div class="fr">
-          <input type="text" id="referred-by" name="referred_by" autocomplete="off" maxlength="60" enterkeyhint="send">
-          <button type="submit" id="thanks-save">Send</button>
-        </div>
-      </div>
     </form>
 
     <p class="state" id="state" hidden role="status" aria-live="polite"></p>
   </section>
 
   <p class="next">
-    Something wrong with this order? <a href="./index.html">Talk to a human</a> — we answer every message ourselves.
+    اكو شي غلط بالطلب؟ <a href="./index.html">تكلم مع إنسان</a> — إحنا نجاوب كل رسالة بأنفسنا.
   </p>
 
 </main>
 
 <footer>
   <div class="foot">
-    <div class="pay"><b>Cards</b><b>Apple Pay</b><b>Cash on delivery</b></div>
-    <p><a href="./returns.html">Returns in 14 days</a> · <a href="./index.html">Delivery</a> · <a href="./index.html">Talk to a human</a></p>
-    <p>Bordiiiz — Boddies Board Games. Address and registration go here before we take a single order.</p>
+    <p><a href="./returns.html">الإرجاع خلال ١٤ يوم</a> · <a href="./index.html">التوصيل</a> · <a href="./index.html">تكلم مع إنسان</a></p>
+    <p>بورديز — العنوان والتسجيل يجون هنا قبل ما نستلم أي طلب.</p>
   </div>
 </footer>
 
 <script>
-/* Attribution capture.
-   Writes four fields against the order:
-     attribution_channel      enum slug, null when skipped
-     attribution_night_code   NIGHT-01 | -02 | -03 | NIGHT-UNKNOWN, else null
-     attribution_referred_by  free text first name, null unless given
+/* Attribution capture. One question, one tap, no branching.
+   Writes five fields against the order:
+     attribution_channel      option id, never the Arabic string, null when skipped
+     attribution_night_code   NIGHT-01 | NIGHT-02 | NIGHT-UNKNOWN, else null
+     attribution_referred_by  first name to thank, null unless given
      attribution_answered_at  ISO timestamp, null when skipped
-   night_code and referred_by are separate fields on purpose: one customer can be
-   a game-night attendee AND a referral, and Growth reads those as two numbers.
-   One tap saves the channel. Each follow-up saves on its own, so skipping one
-   costs nothing and the channel is already banked.
-   No silent failure: a failed write queues locally and says what to do next. */
+     attribution_source       order_confirmation | paper_sheet | manual_match
+
+   The option id is what we store. Customer Love can rewrite every Arabic line
+   tomorrow and the numbers Growth reads do not move.
+
+   night_code and referred_by are not asked on this page — the field's owner cut
+   both follow-ups on 9 Oct and fills them by hand from the paper table sheets.
+   They stay in the payload so one order record serves the tapped answer and the
+   hand-written one, and so a hand-filled night never masquerades as a customer's
+   own answer: those rows carry attribution_source = manual_match.
+
+   No silent failure: a failed write queues locally and the message says what to
+   do next. Nothing here can cost the customer their order — they already paid. */
 (function () {
   'use strict';
 
   var ENDPOINT = '/api/orders/attribution';   // wired to the live order record on BOR-6
   var QUEUE_KEY = 'bordiiiz.attribution.queue';
 
-  // Which follow-ups each answer opens. The other five answers are one tap and
-  // done — they cost nobody an extra tap.
-  var FOLLOWUPS = {
-    friend:     { thanks: true, night: false },
-    game_night: { thanks: true, night: true  }
-  };
-  var NIGHT_IDS = ['night-opt-1', 'night-opt-2', 'night-opt-3', 'night-opt-4'];
-
-  var form      = document.getElementById('attribution-form');
-  var nightBox  = document.getElementById('followup-night');
-  var thanksBox = document.getElementById('followup-thanks');
-  var referred  = document.getElementById('referred-by');
-  var saveBtn   = document.getElementById('thanks-save');
-  var state     = document.getElementById('state');
-  var orderId   = document.getElementById('oid').textContent.trim();
+  var form    = document.getElementById('attribution-form');
+  var state   = document.getElementById('state');
+  var orderId = document.getElementById('oid').textContent.trim();
 
   var channel = null;
-  var nightCode = null;
 
   function say(msg, kind, onRetry) {
     state.className = 'state ' + (kind || '');
@@ -266,7 +213,7 @@ footer{margin:30px 0 0;border-top:1px solid var(--line);background:var(--card)}
       var b = document.createElement('button');
       b.type = 'button';
       b.className = 'retry';
-      b.textContent = 'Try again';
+      b.textContent = 'جرّب مرة ثانية';
       b.addEventListener('click', onRetry);
       state.appendChild(document.createTextNode(' '));
       state.appendChild(b);
@@ -302,62 +249,29 @@ footer{margin:30px 0 0;border-top:1px solid var(--line);background:var(--card)}
     return {
       order_id: orderId,
       attribution_channel: channel,
-      attribution_night_code: nightCode,
-      attribution_referred_by: referred.value.trim() || null,
+      attribution_night_code: null,
+      attribution_referred_by: null,
       attribution_answered_at: new Date().toISOString(),
       attribution_source: 'order_confirmation'
     };
   }
 
-  function save(thanks) {
+  function save() {
     var body = payload();
     send(body, function () {
-      say(thanks, 'ok');
+      say('شكراً — هذا يفيدنا فعلاً.', 'ok');
     }, function () {
       queue(body);
-      say('We could not save that just now. It is not lost — tap to send it again, or ignore it, your order is already paid.', 'warn', function () { save(thanks); });
+      say('ما كَدرنا نحفظها هسه. ما ضاعت — دوس لتدزها مرة ثانية، أو تجاهلها، طلبك مدفوع على كل حال.', 'warn', save);
     });
   }
 
-  function clearNight() {
-    nightCode = null;
-    for (var i = 0; i < NIGHT_IDS.length; i++) {
-      var el = document.getElementById(NIGHT_IDS[i]);
-      if (el) el.checked = false;
-    }
-  }
-
   form.addEventListener('change', function (e) {
-    // The night is one tap too — no button to miss.
-    if (e.target.name === 'night') {
-      nightCode = e.target.value;
-      save('Got it, thank you.');
-      return;
-    }
     if (e.target.name !== 'channel') return;
-
     channel = e.target.value;
-    var f = FOLLOWUPS[channel] || { thanks: false, night: false };
-
-    nightBox.hidden = !f.night;
-    thanksBox.hidden = !f.thanks;
-    if (!f.night) clearNight();   // never carry a night code onto another channel
-    referred.value = '';
-
-    save('Thank you — that is genuinely useful.');
-  });
-
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    if (!channel) return;
-    saveBtn.disabled = true;
-    save(referred.value.trim()
-      ? 'Thank you — we will let them know.'
-      : 'Got it, thank you.');
-    saveBtn.disabled = false;
+    save();
   });
 })();
 </script>
-
 </body>
 </html>
