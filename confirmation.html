@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Order confirmed — Bordiiiz</title>
+<meta name="description" content="Order confirmation. Preview build.">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+--ink:#14110f;--ink2:#5a524c;--line:#e6e0d8;--bg:#fbf8f4;--card:#fff;
+--accent:#b4442c;--accent-ink:#fff;--ok:#1d6f42;
+--pad:16px;--r:14px;
+}
+html{-webkit-text-size-adjust:100%}
+body{
+font:16px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;
+color:var(--ink);background:var(--bg);
+}
+img,svg{display:block;max-width:100%}
+a{color:inherit}
+.wrap{max-width:720px;margin:0 auto;padding:0 var(--pad)}
+
+.preview{background:#14110f;color:#fbf8f4;font-size:13px;line-height:1.4;padding:10px var(--pad);text-align:center}
+.preview b{color:#f0b429}
+
+header{border-bottom:1px solid var(--line);background:var(--card)}
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px var(--pad);max-width:720px;margin:0 auto}
+.logo{font-size:19px;font-weight:700;letter-spacing:-.4px;text-decoration:none}
+.logo span{color:var(--accent)}
+
+.steps{display:flex;gap:8px;margin:20px 0 4px;font-size:13px;color:var(--ink2)}
+.steps li{list-style:none;flex:1;border-top:3px solid var(--accent);padding-top:7px}
+
+.done{padding:26px 0 4px}
+.tick{width:40px;height:40px;border-radius:50%;background:var(--ok);display:grid;place-items:center;margin-bottom:14px}
+.tick svg{width:22px;height:22px}
+.done h1{font-size:26px;line-height:1.18;letter-spacing:-.5px;margin-bottom:8px}
+.done p{color:var(--ink2);max-width:42ch}
+.done .oid{font-weight:700;color:var(--ink)}
+
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px var(--pad);margin:22px 0}
+.panel h2{font-size:18px;line-height:1.25;letter-spacing:-.2px;margin-bottom:4px;text-transform:none;color:var(--ink)}
+.panel .hint{font-size:13.5px;color:var(--ink2);font-style:italic}
+
+/* one question, one tap. nothing pre-selected, skippable without a click. */
+fieldset{border:0;margin-top:14px}
+legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{position:relative;display:block}
+.opt input{position:absolute;inset:0;width:100%;height:100%;opacity:0;margin:0;cursor:pointer}
+.opt span{
+display:block;border:1px solid var(--line);border-radius:10px;
+padding:13px 14px;font-size:16px;background:var(--bg);
+min-height:48px;display:flex;align-items:center;
+}
+.opt input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.opt input:checked+span{border-color:var(--accent);background:#fdf1ee;font-weight:600}
+.opt input:disabled+span{opacity:.5}
+
+.followup{margin-top:14px;padding-top:14px;border-top:1px solid var(--line)}
+.followup[hidden]{display:none}
+.followup label{display:block;font-size:16px;font-weight:700;margin-bottom:2px}
+.followup .hint{display:block;margin-bottom:10px}
+.fr{display:flex;gap:8px;flex-wrap:wrap}
+input[type=text]{
+flex:1 1 180px;min-width:0;font:inherit;color:inherit;
+border:1px solid var(--line);border-radius:10px;padding:12px 13px;background:var(--bg);min-height:48px;
+}
+input[type=text]:focus-visible{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+button{
+font:inherit;font-weight:700;cursor:pointer;border:1px solid var(--accent);
+background:var(--accent);color:var(--accent-ink);border-radius:10px;padding:12px 18px;min-height:48px;
+}
+button[disabled]{opacity:.55;cursor:default}
+
+.state{margin-top:12px;font-size:14px;display:flex;gap:7px;align-items:flex-start}
+.state[hidden]{display:none}
+.state.ok{color:var(--ok);font-weight:600}
+.state.warn{color:#9a5b00}
+.state .retry{background:none;border:0;color:inherit;font:inherit;font-weight:700;text-decoration:underline;padding:0;min-height:0}
+
+.next{font-size:14px;color:var(--ink2);margin-top:18px}
+.next a{color:var(--ink);text-decoration:underline}
+
+footer{margin:30px 0 0;border-top:1px solid var(--line);background:var(--card)}
+.foot{max-width:720px;margin:0 auto;padding:20px var(--pad) 32px;font-size:13.5px;color:var(--ink2);display:flex;flex-direction:column;gap:10px}
+.pay{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.pay b{font-size:11px;letter-spacing:.06em;text-transform:uppercase;border:1px solid var(--line);border-radius:5px;padding:4px 7px;color:var(--ink2);font-weight:700}
+.foot a{color:var(--ink);text-decoration:underline}
+</style>
+</head>
+<body>
+
+<p class="preview">
+  <b>PREVIEW BUILD</b> — wording on this page is pending Founder sign-off. No orders are taken here.
+</p>
+
+<header>
+  <div class="bar">
+    <a class="logo" href="./index.html">Bordii<span>i</span>iz</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <ol class="steps">
+    <li>1. Pick</li>
+    <li>2. Pay</li>
+    <li>3. Done</li>
+  </ol>
+
+  <section class="done">
+    <div class="tick" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12.5 9.5 18 20 6.5"/></svg>
+    </div>
+    <h1>Paid. Your evening is on its way.</h1>
+    <p>Order <span class="oid" id="oid">BOR-10042</span> — a confirmation is on its way to your email. We pack and hand over within one working day.</p>
+  </section>
+
+  <!-- Attribution question. Wording owned by Customer Love Lead (BOR-9 / BOR-24).
+       Placement: after payment succeeds, never inside the checkout flow. -->
+  <section class="panel" id="attribution">
+    <h2>How did you hear about us?</h2>
+    <p class="hint">Optional — it helps us know where to show up.</p>
+
+    <form id="attribution-form" novalidate>
+      <fieldset>
+        <legend>How did you hear about us?</legend>
+        <div class="opts">
+          <label class="opt"><input type="radio" name="channel" value="friend"><span>A friend told me</span></label>
+          <label class="opt"><input type="radio" name="channel" value="instagram"><span>Instagram</span></label>
+          <label class="opt"><input type="radio" name="channel" value="tiktok"><span>TikTok</span></label>
+          <label class="opt"><input type="radio" name="channel" value="game_night"><span>I saw it at a game night</span></label>
+          <label class="opt"><input type="radio" name="channel" value="search"><span>Google or search</span></label>
+          <label class="opt"><input type="radio" name="channel" value="facebook"><span>Facebook</span></label>
+          <label class="opt"><input type="radio" name="channel" value="other"><span>Somewhere else</span></label>
+        </div>
+      </fieldset>
+
+      <!-- Conditional detail. Only ever one line, only for the two answers that
+           carry a name or a code. Saved separately so skipping it costs nothing. -->
+      <div class="followup" id="followup" hidden>
+        <label for="detail" id="detail-label">Who should we thank?</label>
+        <span class="hint" id="detail-hint">Optional, first name is fine.</span>
+        <div class="fr">
+          <input type="text" id="detail" name="detail" autocomplete="off" maxlength="60" enterkeyhint="send">
+          <button type="submit" id="detail-save">Send</button>
+        </div>
+      </div>
+    </form>
+
+    <p class="state" id="state" hidden role="status" aria-live="polite"></p>
+  </section>
+
+  <p class="next">
+    Something wrong with this order? <a href="./index.html">Talk to a human</a> — we answer every message ourselves.
+  </p>
+
+</main>
+
+<footer>
+  <div class="foot">
+    <div class="pay"><b>Cards</b><b>Apple Pay</b><b>Cash on delivery</b></div>
+    <p><a href="./index.html">Returns in 14 days</a> · <a href="./index.html">Delivery</a> · <a href="./index.html">Talk to a human</a></p>
+    <p>Bordiiiz — Boddies Board Games. Address and registration go here before we take a single order.</p>
+  </div>
+</footer>
+
+<script>
+/* Attribution capture.
+   Writes three fields against the order:
+     attribution_channel      enum slug, null when skipped
+     attribution_detail       free text, null unless given
+     attribution_answered_at  ISO timestamp, null when skipped
+   One tap saves the channel. The follow-up line saves on its own.
+   No silent failure: a failed write queues locally and says what to do next. */
+(function () {
+  'use strict';
+
+  var ENDPOINT = '/api/orders/attribution';   // wired to the live order record on BOR-6
+  var QUEUE_KEY = 'bordiiiz.attribution.queue';
+
+  // Only these two answers carry something we can act on. The other five are
+  // one tap and done. Growth hands out NIGHT-01.. codes at game nights (BOR-6);
+  // this captures the code without costing anyone else a tap.
+  var FOLLOWUP = {
+    friend:     { label: 'Who should we thank?',          hint: 'Optional, first name is fine.' },
+    game_night: { label: 'Which night? There is a code on the table card.', hint: 'Optional, e.g. NIGHT-01.' }
+  };
+
+  var form     = document.getElementById('attribution-form');
+  var followup = document.getElementById('followup');
+  var detail   = document.getElementById('detail');
+  var dLabel   = document.getElementById('detail-label');
+  var dHint    = document.getElementById('detail-hint');
+  var saveBtn  = document.getElementById('detail-save');
+  var state    = document.getElementById('state');
+  var orderId  = document.getElementById('oid').textContent.trim();
+
+  var channel = null;
+
+  function say(msg, kind, onRetry) {
+    state.className = 'state ' + (kind || '');
+    state.textContent = '';
+    state.appendChild(document.createTextNode(msg));
+    if (onRetry) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'retry';
+      b.textContent = 'Try again';
+      b.addEventListener('click', onRetry);
+      state.appendChild(document.createTextNode(' '));
+      state.appendChild(b);
+    }
+    state.hidden = false;
+  }
+
+  function queue(payload) {
+    try {
+      var q = JSON.parse(localStorage.getItem(QUEUE_KEY) || '[]');
+      q.push(payload);
+      localStorage.setItem(QUEUE_KEY, JSON.stringify(q.slice(-20)));
+    } catch (e) { /* private mode: the retry button is the fallback */ }
+  }
+
+  function send(payload, onOk, onFail) {
+    // Preview build has no backend yet. The payload shape below is the contract
+    // the live shop implements on BOR-6; swap the stub for the fetch call then.
+    if (!window.BORDIIIZ_LIVE) {
+      console.log('[attribution] would POST ' + ENDPOINT, payload);
+      onOk();
+      return;
+    }
+    fetch(ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+      keepalive: true
+    }).then(function (r) { r.ok ? onOk() : onFail(); }, onFail);
+  }
+
+  function payload() {
+    return {
+      order_id: orderId,
+      attribution_channel: channel,
+      attribution_detail: detail.value.trim() || null,
+      attribution_answered_at: new Date().toISOString(),
+      attribution_source: 'order_confirmation'
+    };
+  }
+
+  function save(thanks) {
+    var body = payload();
+    send(body, function () {
+      say(thanks, 'ok');
+    }, function () {
+      queue(body);
+      say('We could not save that just now. It is not lost — tap to send it again, or ignore it, your order is already paid.', 'warn', function () { save(thanks); });
+    });
+  }
+
+  form.addEventListener('change', function (e) {
+    if (e.target.name !== 'channel') return;
+    channel = e.target.value;
+
+    var f = FOLLOWUP[channel];
+    if (f) {
+      dLabel.textContent = f.label;
+      dHint.textContent = f.hint;
+      detail.value = '';
+      followup.hidden = false;
+    } else {
+      followup.hidden = true;
+      detail.value = '';
+    }
+
+    save('Thank you — that is genuinely useful.');
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!channel) return;
+    saveBtn.disabled = true;
+    save(channel === 'friend'
+      ? 'Thank you — we will let them know.'
+      : 'Got it, thank you.');
+    saveBtn.disabled = false;
+  });
+})();
+</script>
+
+</body>
+</html>
