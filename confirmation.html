@@ -44,6 +44,12 @@ header{border-bottom:1px solid var(--line);background:var(--card)}
 .panel h2{font-size:18px;line-height:1.25;letter-spacing:-.2px;margin-bottom:4px;text-transform:none;color:var(--ink)}
 .panel .hint{font-size:13.5px;color:var(--ink2);font-style:italic}
 
+.rows{margin-top:14px;font-size:15px}
+.rows>div{padding:11px 0;border-top:1px solid var(--line)}
+.rows dt{font-size:11.5px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--ink2)}
+.rows dd{margin:3px 0 0}
+.rows a{color:var(--ink)}
+
 /* one question, one tap. nothing pre-selected, skippable without a click. */
 fieldset{border:0;margin-top:14px}
 legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -119,6 +125,24 @@ footer{margin:30px 0 0;border-top:1px solid var(--line);background:var(--card)}
     <p>Order <span class="oid" id="oid">BOR-10042</span> — a confirmation is on its way to your email. We pack and hand over within one working day.</p>
   </section>
 
+  <!-- Fulfilment block (asked for by Ops on BOR-13). Driven by two order fields:
+         delivery_promised_by  frozen at order time; the date we defend, not the
+                               courier's estimate. Ops's on-time % measures against it.
+         tracking_number       empty -> this block never uses the word "shipped".
+                               set   -> carrier + number + tracked link appear here
+                                        and go out in the shipping email.
+       An order with no tracking number is not shipped. The page tells the same
+       truth as the order log, so the status is never a lie. -->
+  <section class="panel">
+    <h2>Arriving Mon 13 &ndash; Wed 15 Oct</h2>
+    <p class="hint">That is our promise, not the courier's estimate. If it is late, that is ours to fix &mdash; tell us.</p>
+    <dl class="rows">
+      <div><dt>Status</dt><dd>Packed. Waiting for the courier to collect.</dd></div>
+      <div><dt>Tracking</dt><dd>Appears here the moment we hand the box over, and we email it to you at the same time.</dd></div>
+      <div><dt>Changed your mind?</dt><dd><a href="./returns.html">Send it back within 14 days</a> &mdash; you do not need to email anyone.</dd></div>
+    </dl>
+  </section>
+
   <!-- Attribution question. Wording owned by Customer Love Lead (BOR-9 / BOR-24).
        Placement: after payment succeeds, never inside the checkout flow. -->
   <section class="panel" id="attribution">
@@ -163,7 +187,7 @@ footer{margin:30px 0 0;border-top:1px solid var(--line);background:var(--card)}
 <footer>
   <div class="foot">
     <div class="pay"><b>Cards</b><b>Apple Pay</b><b>Cash on delivery</b></div>
-    <p><a href="./index.html">Returns in 14 days</a> · <a href="./index.html">Delivery</a> · <a href="./index.html">Talk to a human</a></p>
+    <p><a href="./returns.html">Returns in 14 days</a> · <a href="./index.html">Delivery</a> · <a href="./index.html">Talk to a human</a></p>
     <p>Bordiiiz — Boddies Board Games. Address and registration go here before we take a single order.</p>
   </div>
 </footer>

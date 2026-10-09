@@ -47,6 +47,7 @@ h1{font-size:28px;line-height:1.15;letter-spacing:-.6px}
 .stock{font-size:13px;font-weight:700;color:var(--ok)}
 .ship{font-size:13.5px;color:var(--ink2);margin-top:8px}
 .ship b{color:var(--ink)}
+.cut{font-size:13px;color:var(--ok);font-weight:600;margin-top:5px}
 
 .btn{display:block;width:100%;margin-top:14px;padding:15px;border:0;border-radius:11px;background:var(--accent);color:#fff;font:inherit;font-weight:700;font-size:17px;text-align:center;text-decoration:none;cursor:pointer}
 .btn:active{background:#9c3722}
@@ -133,7 +134,12 @@ footer{margin-top:32px;border-top:1px solid var(--line);background:var(--card)}
       <span class="price">19.00 <small>USD*</small></span>
       <span class="stock">In stock · 12 boxes</span>
     </div>
-    <p class="ship">Delivery <b>3.50</b> · arrives in <b>2–4 days</b>. Free over 50.00.</p>
+    <!-- Delivery promise and cut-off (Ops, BOR-13). The date range is OUR promise,
+         not the courier's estimate — it is frozen onto the order as
+         delivery_promised_by and it is what Ops's on-time % is measured against.
+         Both values come from the zone table; placeholders until Ops fills it. -->
+    <p class="ship">Delivery <b>3.50</b> · arrives <b>Mon 13 – Wed 15 Oct</b>&dagger;. Free over 50.00.</p>
+    <p class="cut">Order before <b>14:00</b> today and it ships today.</p>
     <a class="btn" href="#" aria-label="Buy Codenames now">Buy now</a>
     <a class="btn ghost" href="#">Add to cart instead</a>
     <p class="note">Two taps from here to paid. Card, Apple Pay, or cash on delivery.</p>
@@ -147,7 +153,7 @@ footer{margin-top:32px;border-top:1px solid var(--line);background:var(--card)}
 
   <h2>Before you buy</h2>
   <ul class="trust">
-    <li><b>Returns</b><span>14 days, box opened or not. We pay the return shipping if the game was damaged.</span></li>
+    <li><b>Returns</b><span>14 days, box opened or not. We pay the return shipping if the game was damaged. <a href="./returns.html">How to send it back</a> — no email needed.</span></li>
     <li><b>Language</b><span>English edition. Rules are language-independent once you start.</span></li>
     <li><b>Stock</b><span>The number above is real stock in our room. We never sell a box we do not have.</span></li>
     <li><b>A human</b><span>Not sure it fits your group? <a href="./index.html">Ask us</a> — a person answers, same day.</span></li>
@@ -166,7 +172,8 @@ footer{margin-top:32px;border-top:1px solid var(--line);background:var(--card)}
   <div class="foot">
     <div class="pay"><b>Cards</b><b>Apple Pay</b><b>Cash on delivery</b></div>
     <p>*Price and currency are indicative in this preview. Market and currency are a Founder decision; the catalog price comes from Supply.</p>
-    <p><a href="./index.html">Returns in 14 days</a> · <a href="./index.html">Delivery</a> · <a href="./index.html">Talk to a human</a></p>
+    <p>&dagger;Delivery date and cut-off time are placeholders. They are rendered from the Ops zone table (BOR-13) and go live with real values before order #1.</p>
+    <p><a href="./returns.html">Returns in 14 days</a> · <a href="./index.html">Delivery</a> · <a href="./index.html">Talk to a human</a></p>
     <p>Bordiiiz — Boddies Board Games. Address and registration go here before we take a single order.</p>
   </div>
 </footer>
