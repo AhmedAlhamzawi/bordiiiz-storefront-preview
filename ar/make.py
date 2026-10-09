@@ -14,6 +14,7 @@ Safety rails, deliberate:
   * whatsapp empty      -> order buttons render disabled, page says why. No dead button.
   * public false        -> pre-launch banner + noindex. Nothing public by accident.
   * prices_approved false -> prices show with an "not final" marker.
+  * cod_cap_today 0/absent -> cash on delivery is absent from the page entirely.
 A page that quietly ships a broken order button is worse than no page.
 """
 
@@ -29,6 +30,14 @@ PUBLIC = bool(CFG.get("public"))
 PRICES_OK = bool(CFG.get("prices_approved"))
 DELIVERY = CFG.get("delivery_iqd")
 LIVE = PUBLIC and bool(WA) and PRICES_OK
+
+# COD switch, BOR-30. Ops publishes the cap; we only read it. Default closed:
+# anything that is not a positive integer means cash on delivery is absent from
+# the page. A bug that opens COD spends money we do not hold, so the failure
+# direction is chosen deliberately.
+_CAP = CFG.get("cod_cap_today")
+COD_CAP = _CAP if isinstance(_CAP, int) and not isinstance(_CAP, bool) else 0
+COD_OPEN = COD_CAP > 0
 
 
 def iqd(n):
@@ -102,6 +111,16 @@ delivery_line = (
     f"التوصيل داخل بغداد: {iqd(DELIVERY)} د.ع."
     if isinstance(DELIVERY, int)
     else "أجرة التوصيل داخل بغداد نقولها لك بالواتساب قبل ما تأكد الطلب — ما نفاجئك بسعر عند الباب."
+)
+
+# When COD is closed the option is absent, not disabled and not promised for
+# later. A visible-but-dead choice is one support message per order, and a
+# promise of a future payment method is a promise we have not earned yet.
+pay_line = (
+    "<b>الدفع: حوالة أو محفظة إلكترونية، أو نقداً عند الاستلام.</b>"
+    if COD_OPEN
+    else "<b>الدفع: حوالة أو محفظة إلكترونية.</b>"
+    "<span>نكتب لك الطريقة بالواتساب، وما نطلب منك أي رقم بطاقة.</span>"
 )
 
 banner = "" if LIVE else f"""<p class="pre">
@@ -197,7 +216,7 @@ footer{{border-top:1px solid var(--line);background:var(--card);margin-top:30px}
   <ul class="trust">
     <li><b>يرد عليك إنسان، مو روبوت.</b><span>تكتب لنا على الواتساب ويجيك جواب من واحد منا، مو رسالة جاهزة.</span></li>
     <li><b>{delivery_line}</b></li>
-    <li><b>الدفع: حوالة أو محفظة إلكترونية.</b><span>الدفع عند الاستلام يفتح بعد أول طلبات — نكتبه هنا يوم يصير جاهز، مو قبل.</span></li>
+    <li>{pay_line}</li>
     <li><b>إذا وصلتك ناقصة أو مكسورة، نبدلها.</b><span>ترجعها خلال ١٤ يوم.</span></li>
   </ul>
 </main>
@@ -215,6 +234,7 @@ out.write_text(html, encoding="utf-8")
 
 state = "LIVE" if LIVE else "PRE-LAUNCH"
 print(f"wrote {out.name}  {len(html.encode()):,} bytes  mode={state}")
+print(f"  cash on delivery: {'OPEN, cap ' + str(COD_CAP) if COD_OPEN else 'absent from the page (cap 0, default closed)'}")
 if not LIVE:
     missing = []
     if not WA:

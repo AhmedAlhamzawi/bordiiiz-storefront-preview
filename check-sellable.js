@@ -91,6 +91,41 @@ if (ar) {
   }
 }
 
+// ------------------------------------- the COD cap switch (BOR-30, Ops owns it)
+//
+// Ops publishes COD_CAP_TODAY every morning. We never compute it. The only thing
+// this gate checks is that the page obeys it in the safe direction: a cap that is
+// 0, missing, stale or not an integer must leave cash on delivery ABSENT from the
+// page. Every COD order makes us pay the wholesaler before the customer pays us,
+// so a bug that opens COD spends money we do not hold. That is the one failure
+// that is arithmetic rather than judgement, which is why it lives here and not in
+// anyone's head.
+
+{
+  const raw = ar ? ar.cod_cap_today : undefined;
+  const cap = Number.isInteger(raw) ? raw : 0; // default closed
+  const open = cap > 0;
+  const built = (() => {
+    try { return fs.readFileSync(path.join(ROOT, 'ar/index.html'), 'utf8'); } catch { return ''; }
+  })();
+  const offersCod = /عند الاستلام/.test(built); // "on receipt" = cash on delivery
+
+  console.log(`\nCOD CAP — BOR-30`);
+  console.log(`  COD_CAP_TODAY: ${Number.isInteger(raw) ? raw : `${JSON.stringify(raw)} -> read as 0 (default closed)`}`);
+  console.log(`  cash on delivery on the page: ${offersCod ? 'offered' : 'absent'}`);
+  console.log(`  verdict: ${offersCod === open ? 'page obeys the cap' : 'MISMATCH'}`);
+
+  if (!open && offersCod) {
+    add('BLOCK', 'ar/index.html',
+      `COD_CAP_TODAY is ${cap} but the page still offers cash on delivery — every such order spends wholesaler money we do not hold`,
+      'Head of Product & Tech — rebuild with python3 ar/make.py; the cap is Ops’ number, never edit the page');
+  }
+  if (open && !Number.isInteger(ar && ar.cod_cap_today)) {
+    add('BLOCK', 'ar/config.json', 'cod_cap_today is not an integer — unreadable caps are treated as closed',
+      'Ops & Fulfilment Lead — publish the integer');
+  }
+}
+
 // ------------------------------------------------------- shop-level truth
 
 if (catalog && catalog.shop) {

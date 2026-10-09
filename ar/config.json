@@ -10,6 +10,8 @@
   "public": false,
   "_public_note": "false = pre-launch banner on, noindex on, order buttons disabled. Set true ONLY after the Founder approves the name, the address, the number and the prices on BOR-31.",
 
+  "cod_cap_today": 0,
+  "_cod_note": "COD_CAP_TODAY from BOR-30, published by Ops & Fulfilment Lead every morning. Ops owns the arithmetic, this page owns the switch. 0 or missing or not an integer = cash on delivery is ABSENT from the page, not greyed out. Default closed: every unreadable value means closed, because a failure that opens COD spends money we do not hold. Only Ops changes this number.",
   "delivery_iqd": null,
   "_delivery_note": "Baghdad delivery fee in IQD. Owner: Ops & Fulfilment Lead, BOR-13. null = we tell the customer in the WhatsApp chat before they confirm. Not a dead end: a human answers.",
 
