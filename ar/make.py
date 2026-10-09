@@ -165,14 +165,22 @@ cutoff_line = (
 # Zones we cannot serve are named, not priced, and never silently absent: a
 # customer in a closed district should read "not yet" from us, not discover it
 # after they have paid.
-closed_line = (
-    "<b>" + "، ".join(z["label_ar"] for z in CLOSED_ZONES) + ": ما نوصل لهنا بعد.</b>"
-    "<span>تكدر تكتب لنا على الواتساب ونخبرك يوم نفتحها.</span>"
-    if CLOSED_ZONES
-    else ""
-)
+if not COURIER:
+    # Hand delivery is Baghdad only. Saying "Baghdad only" is one sentence and
+    # saves a customer in Basra from paying before they find out.
+    closed_line = (
+        "<b>بغداد بس للحين.</b>"
+        "<span>خارج بغداد ما نوصل بعد. اكتب لنا على الواتساب ونخبرك يوم نفتحها.</span>"
+    )
+else:
+    closed_line = (
+        "<b>" + "، ".join(z["label_ar"] for z in CLOSED_ZONES) + ": ما نوصل لهنا بعد.</b>"
+        "<span>تكدر تكتب لنا على الواتساب ونخبرك يوم نفتحها.</span>"
+        if CLOSED_ZONES
+        else ""
+    )
 
-other_zones = [z for z in SELLABLE_ZONES if z is not CITY]
+other_zones = [] if not COURIER else [z for z in SELLABLE_ZONES if z is not CITY]
 zones_line = (
     "<b>" + " · ".join(
         f'{z["label_ar"]}: {iqd(z["price_iqd"])} د.ع، {z["min_days"]}–{z["max_days"]} أيام عمل'
@@ -222,7 +230,8 @@ price_wait = (
 trust_items = "\n".join(
     f"    <li>{line}</li>"
     for line in [
-        f"<b>{delivery_line}</b>" + (f"<span>{zones_line}</span>" if zones_line else ""),
+        f"<b>{delivery_line}</b>"
+        + (f"<span>{zones_line or zones_note}</span>" if (zones_line or zones_note) else ""),
         cutoff_line,
         pay_line,
         closed_line,
